@@ -22,7 +22,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = (props) => {
           <div className="flex gap-1">
             <h4 className="truncate text-[15px]">{username}</h4>
             <span className="text-xm bg-primary ml-0.5 rounded-2xl px-1.5 py-1 text-[11px] font-medium text-[#777777]">
-              threads.net
+              sysm
             </span>
           </div>
         </div>

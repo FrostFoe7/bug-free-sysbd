@@ -11,7 +11,7 @@ export default function ThreadsBanner() {
     <header className="mx-auto max-w-(--breakpoint-md) md:max-w-(--breakpoint-2xl) lg:max-w-[1800px]">
       {isMobile ? (
         <div className="flex items-center justify-center">
-          <Icons.logo className="mt-16 mb-6 h-10 w-10 sm:h-16 sm:w-16" />
+          <img src="/logo.png" alt="Logo" className="mt-16 mb-6 h-12 w-12 sm:h-16 sm:w-16 object-contain" />
         </div>
       ) : (
         <nav className="pointer-events-none z-50 flex w-full items-center justify-between select-none">

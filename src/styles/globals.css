@@ -166,6 +166,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans), var(--font-bengali), system-ui, sans-serif;
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -182,4 +183,47 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  /* Bengali text support */
+  .font-bengali {
+    font-family: var(--font-bengali), system-ui, sans-serif;
+  }
+}
+
+/* Threads Text System */
+@utility text-thread-heading {
+  @apply text-[16px] font-bold tracking-normal;
+}
+
+@utility text-thread-title {
+  @apply text-[15px] font-semibold tracking-normal;
+}
+
+@utility text-thread-body {
+  @apply text-[15px] font-normal tracking-normal;
+}
+
+@utility text-thread-caption {
+  @apply text-[13px] font-medium text-[#777777];
+}
+
+@utility text-thread-link {
+  @apply text-[15px] font-semibold text-[#006fe6];
+}
+
+@utility text-thread-meta {
+  @apply text-[13px] font-normal text-[#777777];
+}
+
+@utility text-thread-button {
+  @apply text-[15px] font-semibold tracking-normal;
+}
+
+@utility text-thread-input {
+  @apply text-[15px] font-medium tracking-normal placeholder:text-[#777777];
+}
+
+@utility wrap-break-word {
+  word-wrap: break-word;
+  word-break: break-word;
 }

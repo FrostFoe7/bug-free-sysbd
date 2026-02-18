@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Inter, Hind_Siliguri } from "next/font/google";
 import { headers } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -17,6 +17,12 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
+const hindSiliguri = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-bengali",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://threads.codebustar.com"),
   title: {
@@ -29,8 +35,8 @@ export const metadata: Metadata = {
     "prisma",
     "tRPC",
     "sujjeee",
-    "threads",
-    "threads-clone",
+    "sysm",
+    "social",
     "t3-stack",
     "uploadthing",
     "shadcn ui",
@@ -77,7 +83,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`no-scrollbar font-sans ${inter.variable}`}>
+      <body className={`no-scrollbar font-sans ${inter.variable} ${hindSiliguri.variable}`}>
         <SupabaseProvider>
           <TRPCReactProvider headers={headers()}>
             <ThemeProvider

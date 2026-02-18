@@ -113,7 +113,7 @@ const SeedPage: React.FC = ({}) => {
               aria-hidden="true"
             />
           )}
-          Add Threads
+          Add Posts
         </Button>
 
         <Button

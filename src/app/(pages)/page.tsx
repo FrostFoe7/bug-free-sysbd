@@ -9,7 +9,7 @@ import Error from "@/app/error";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import StarOnGithub from "@/components/star-on-github";
+// import StarOnGithub from "@/components/star-on-github";
 import useDialog from "@/store/dialog";
 import CreateWithInput from "@/components/create-with-input";
 
@@ -60,9 +60,9 @@ const HomePage: React.FC = () => {
           })}
         </div>
       </InfiniteScroll>
-      <div className="fixed bottom-10 left-[8%] rounded-full px-8 py-6">
+      {/* <div className="fixed bottom-10 left-[8%] rounded-full px-8 py-6">
         <StarOnGithub />
-      </div>
+      </div> */}
     </>
   );
 };

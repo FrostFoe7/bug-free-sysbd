@@ -36,7 +36,7 @@ export default function SiteHeader() {
             href={"/"}
             className="z-50 flex w-full transform cursor-pointer items-center justify-center gap-2.5 py-4 text-2xl font-semibold tracking-wide transition-all duration-150 ease-out hover:scale-105 active:scale-95 sm:w-fit"
           >
-            <Icons.logo className="h-[34px] w-[34px]" />
+            <img src="/logo.png" alt="Logo" className="h-[40px] w-[40px] object-contain" />
           </Link>
           <div className="hidden w-full max-w-[480px] items-center justify-between sm:flex">
             <Navigation />

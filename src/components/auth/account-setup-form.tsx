@@ -58,7 +58,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
         if (success) {
           router.push(origin ? `${origin}` : "/");
         }
-        toast.success(`Welcome to threads ${username} !`);
+        toast.success(`Welcome to Sysm ${username} !`);
       },
       onError: (err) => {
         toast.error("AuthCallBack: Something went wrong!");
@@ -136,7 +136,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
                 Profile
               </h2>
               <span className="text-muted-foreground leading-7">
-                Customize your Threads profile
+                Customize your Sysm profile
               </span>
               <Card className="my-4 w-full rounded-2xl bg-transparent p-6 px-8 sm:mt-10">
                 <div className="flex flex-col gap-4">
@@ -216,7 +216,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
             Privacy
           </h2>
           <span className="text-muted-foreground text-center leading-7">
-            Your privacy can be different on Threads and Instagarm.
+            Your privacy can be different on Sysm and Instagram.
           </span>
 
           <RadioGroup
@@ -246,7 +246,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
                   <Globe className="h-5 w-5" />
                 </div>
                 <span className="max-w-[350px]">
-                  Anyone on or off Threads can see, share and interact with your
+                  Anyone on or off Sysm can see, share and interact with your
                   content.
                 </span>
               </Label>
