@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Toaster as RadToaster } from "sonner"
+import { Toaster as RadToaster } from "sonner";
 
 export function Toaster() {
   return (
     <RadToaster
-      className="w-max flex max-h-10 max-w-sm items-center justify-center rounded-x px-2"
+      className="rounded-x flex max-h-10 w-max max-w-sm items-center justify-center px-2"
       position="bottom-center"
       toastOptions={{
         style: {
@@ -13,9 +13,9 @@ export function Toaster() {
           height: "fit-content",
           width: "max-content",
           fontWeight: 600,
-          fontSize: 15
+          fontSize: 15,
         },
       }}
     />
-  )
+  );
 }
