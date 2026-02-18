@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import type { PostReplyCardProps } from "@/types";
 import Username from "@/components/user/user-username";
 import PostActionMenu from "@/components/menus/post-action-menu";
@@ -42,7 +42,7 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
     scrollToPost();
   }, [postInfo]);
 
-  const { user: loggedUser } = useUser();
+  const { user: loggedUser } = useSupabaseAuth();
 
   const {
     id,

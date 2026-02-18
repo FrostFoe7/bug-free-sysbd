@@ -6,7 +6,7 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import type { AuthorInfoProps } from "@/types";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { cn } from "@/lib/utils";
 
 interface FollowButtonProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,7 +21,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 }) => {
   const path = usePathname();
 
-  const { user: loggedUser } = useUser();
+  const { user: loggedUser } = useSupabaseAuth();
 
   const isSameUser = author.id === loggedUser?.id;
   const isFollowedByMe = author.followers?.some(

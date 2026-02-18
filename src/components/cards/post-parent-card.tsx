@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { cn, formatTimeAgo } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import type { PostCardProps } from "@/types";
 import UserRepliesImages from "@/components/user/user-replies-images";
 import ProfileInfoCard from "@/components/cards/user-profile-card";
@@ -33,7 +33,7 @@ const PostParentCard: React.FC<PostCardProps> = ({
   reposts,
   quoteId,
 }) => {
-  const { user: loggedUser } = useUser();
+  const { user: loggedUser } = useSupabaseAuth();
 
   const { replyCount } = count;
 

@@ -3,22 +3,22 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { catchClerkError, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { authSchema } from "@/lib/validations/auth";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Icons } from "@/components/icons";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 
 export default function LoginForm() {
   const router = useRouter();
   type Inputs = z.infer<typeof authSchema>;
 
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { signIn } = useSupabaseAuth();
   const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form
@@ -31,25 +31,17 @@ export default function LoginForm() {
   });
 
   function onSubmit(data: Inputs) {
-    if (!isLoaded) return;
-
     startTransition(async () => {
       try {
-        const result = await signIn.create({
-          identifier: data.identifier,
-          password: data.password,
-        });
-
-        if (result.status === "complete") {
-          await setActive({ session: result.createdSessionId });
-          router.push(`${window.location.origin}/`);
+        const { error } = await signIn(data.identifier, data.password);
+        
+        if (error) {
+          toast.error(error.message || "Invalid email or password");
         } else {
-          toast.error(
-            "Sorry, something went wrong. Please try again, or refresh the page.",
-          );
+          router.push(`${window.location.origin}/`);
         }
       } catch (err) {
-        catchClerkError(err);
+        toast.error("Something went wrong. Please try again.");
       }
     });
   }
@@ -57,7 +49,7 @@ export default function LoginForm() {
   return (
     <div>
       <span className="select-none font-bold text-white">
-        Log in with your Instagram account
+        Log in with your account
       </span>
 
       <Form {...form}>
@@ -83,7 +75,7 @@ export default function LoginForm() {
                         },
                       )}
                       placeholder={
-                        error ? error.message : "Username, phone or email"
+                        error ? error.message : "Email"
                       }
                       type="text"
                       {...field}

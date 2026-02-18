@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { ResizeTextarea } from "@/components/ui/resize-textarea";
 import { Privacy } from "@prisma/client";
 import type { User } from "@prisma/client";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,7 +30,7 @@ import {
 type UserSetupProps = Pick<User, "bio" | "link" | "privacy" | "username">;
 
 export default function AccountSetupForm({ username }: { username: string }) {
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
   const router = useRouter();
 
   const [showPrivacyPage, setShowPrivacyPage] = React.useState(false);
@@ -146,14 +146,14 @@ export default function AccountSetupForm({ username }: { username: string }) {
                       <div className=" my-1 flex h-7  w-full items-center gap-2">
                         <Lock className="h-4 w-4 text-[#4D4D4D]" />
                         <div className="w-full grow select-none overflow-hidden wrap-break-word text-[15px] tracking-wide text-accent-foreground outline-hidden">
-                          {`${getFullName(user?.firstName ?? "", user?.lastName ?? "")} ${"(" + userAccountData?.username + ")"}`}
+                          {`${getFullName((user?.user_metadata?.first_name as string) ?? "", (user?.user_metadata?.last_name as string) ?? "")} ${"(" + userAccountData?.username + ")"}`}
                         </div>
                       </div>
                     </div>
                     <Avatar className="h-12 w-12 rounded-full outline-solid outline-1 outline-border ">
                       <AvatarImage
-                        src={user?.imageUrl}
-                        alt={user?.username ?? ""}
+                        src={(user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""}
+                        alt={(user?.user_metadata?.username as string) ?? ""}
                         className="object-cover"
                       />
                       <AvatarFallback>

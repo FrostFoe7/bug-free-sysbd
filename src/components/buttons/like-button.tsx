@@ -3,7 +3,7 @@
 import React from "react";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import type { PostCardProps } from "@/types";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ interface LikeButtonProps {
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
-  const { user: loggedUser } = useUser();
+  const { user: loggedUser } = useSupabaseAuth();
 
   const { count, id, likes } = likeInfo;
   const isLikedByMe = likes?.some((like) => like.userId === loggedUser?.id);

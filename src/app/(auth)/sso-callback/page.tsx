@@ -1,16 +1,9 @@
-import { type HandleOAuthCallbackParams } from "@clerk/types";
 import SSOCallback from "@/components/auth/sso-callback";
 
-export interface SSOCallbackPageProps {
-  searchParams: HandleOAuthCallbackParams;
-}
-
-export default function SSOCallbackPage({
-  searchParams,
-}: SSOCallbackPageProps) {
+export default function SSOCallbackPage() {
   return (
     <div className="flex h-[90vh] items-center justify-center">
-      <SSOCallback searchParams={searchParams} />
+      <SSOCallback />
     </div>
   );
 }

@@ -1,12 +1,14 @@
 "use server";
 
-import { getUserEmail } from "@/lib/utils";
-import { clerkClient } from "@clerk/nextjs";
-import type { User } from "@clerk/nextjs/server";
-import type { UserResource } from "@clerk/types";
+import { db } from "@/server/db";
 
-export async function generateUsername(user: UserResource | User | null) {
-  const email = getUserEmail(user);
+export async function generateUsername(user: { email?: string | null } | null) {
+  const email = user?.email;
+  
+  if (!email) {
+    throw new Error("Email not available");
+  }
+  
   const usernameMatch = email.match(/^(.+)@/);
 
   if (!usernameMatch) {
@@ -18,10 +20,10 @@ export async function generateUsername(user: UserResource | User | null) {
 
   let username = cleanUsername;
 
-  const user_list = await clerkClient.users.getUserList();
-
-  // Check if the username is available in the list
-  let isUsernameTaken = user_list.some((user) => user.username === username);
+  // Check if the username is available in the database
+  let isUsernameTaken = await db.user.findUnique({
+    where: { username },
+  });
 
   if (!isUsernameTaken) {
     return username;
@@ -29,7 +31,9 @@ export async function generateUsername(user: UserResource | User | null) {
 
   // If not available, add an underscore and recheck
   username += "_";
-  isUsernameTaken = user_list.some((user) => user.username === username);
+  isUsernameTaken = await db.user.findUnique({
+    where: { username },
+  });
 
   if (!isUsernameTaken) {
     return username;
@@ -40,7 +44,9 @@ export async function generateUsername(user: UserResource | User | null) {
   while (isUsernameTaken) {
     index += 1;
     username = `${cleanUsername}${index.toString().padStart(2, "0")}`;
-    isUsernameTaken = user_list.some((user) => user.username === username);
+    isUsernameTaken = await db.user.findUnique({
+      where: { username },
+    });
   }
 
   return username;

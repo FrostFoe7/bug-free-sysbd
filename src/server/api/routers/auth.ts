@@ -3,7 +3,6 @@ import { emailToUsername, getUserEmail } from "@/lib/utils";
 import { TRPCError } from "@trpc/server";
 import { Privacy } from "@prisma/client";
 import { generateUsername } from "@/app/_actions/generate-username";
-import { clerkClient } from "@clerk/nextjs";
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import { env } from "@/env.mjs";
 
@@ -37,7 +36,10 @@ export const authRouter = createTRPCRouter({
         return `${firstName} ${lastName}`;
       }
 
-      const fullname = getFullName(user?.firstName ?? "", user?.lastName ?? "");
+      const fullname = getFullName(
+        (user?.user_metadata?.first_name as string) ?? "",
+        (user?.user_metadata?.last_name as string) ?? ""
+      );
 
       const dbUser = await ctx.db.user.findUnique({
         where: {
@@ -52,7 +54,7 @@ export const authRouter = createTRPCRouter({
               id: user.id,
               username,
               fullname,
-              image: user.imageUrl,
+              image: (user.user_metadata?.avatar_url as string) ?? null,
               privacy: input.privacy,
               bio: input.bio,
               link: input.link,
@@ -60,10 +62,6 @@ export const authRouter = createTRPCRouter({
               verified: true,
             },
           });
-
-          const params = { username: created_user.username };
-
-          await clerkClient.users.updateUser(userId, params);
 
           if (env.ADMIN_USER_ID && env.ADMIN_USER_ID.trim() !== "") {
             await prisma.notification.create({

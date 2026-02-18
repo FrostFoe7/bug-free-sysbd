@@ -8,7 +8,7 @@ import { cn, formatURL } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import type { UserProfileInfoProps } from "@/types";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import UserFollowers from "@/components/user/user-followers";
 import FollowButton from "@/components/buttons/follow-button";
@@ -17,7 +17,7 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
   const { id, bio, fullname, image, link, username, followers, isAdmin } =
     props;
   const path = usePathname();
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
 
   const params = useParams();
   const profile = params.profile as string;

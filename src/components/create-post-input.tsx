@@ -7,7 +7,7 @@ import Username from "@/components/user/user-username";
 import { ResizeTextarea } from "@/components/ui/resize-textarea";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/user/user-avatar";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import type { ParentPostInfo } from "@/types";
@@ -30,7 +30,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
   onTextareaChange,
   quoteInfo,
 }) => {
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
   const { setSelectedFile } = useFileStore();
 
   const [inputValue, setInputValue] = React.useState("");
@@ -62,10 +62,8 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
       setPreviewURL(previewURL);
 
       setSelectedFile(acceptedFiles);
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [maxSize],
+    [maxSize, setSelectedFile],
   );
 
   const accept: Accept = {
@@ -103,9 +101,9 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
           />
         ) : (
           <UserAvatar
-            image={user?.imageUrl}
-            username={user?.username ?? ""}
-            fullname={user?.fullName}
+            image={(user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""}
+            username={(user?.user_metadata?.username as string) ?? ""}
+            fullname={(user?.user_metadata?.full_name as string) ?? ""}
           />
         )}
 
@@ -126,7 +124,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
           </div>
         ) : (
           <span className="text-[15px] font-medium leading-none tracking-normal">
-            {user?.username}
+            {user?.user_metadata?.username || user?.email?.split("@")[0]}
           </span>
         )}
 

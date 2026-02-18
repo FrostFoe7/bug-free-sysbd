@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import AreYouSure from "@/components/cards/confirmation-card";
 
 interface PostActionMenuProps {
@@ -19,7 +19,7 @@ const PostActionMenu: React.FC<PostActionMenuProps> = ({
   authorId,
   threadId,
 }) => {
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
   const isLoggedUser = authorId === user?.id;
   return (
     <>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useClerk } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { Icons } from "@/components/icons";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -16,7 +16,7 @@ import {
 export default function NavigationMenu() {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  const { signOut } = useClerk();
+  const { signOut } = useSupabaseAuth();
 
   return (
     <>
@@ -48,7 +48,7 @@ export default function NavigationMenu() {
           <DropdownMenuItem className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal  focus:bg-transparent active:bg-primary-foreground">
             <div
               aria-label="Log out"
-              onClick={() => signOut(() => router.push("/"))}
+              onClick={async () => { await signOut(); router.push("/"); }}
             >
               Log out
             </div>

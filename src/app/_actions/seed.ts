@@ -1,12 +1,13 @@
 "use server";
 
 import { db } from "@/server/db";
-import { currentUser } from "@clerk/nextjs";
+import { createClient } from "@/lib/supabase/server";
 import { faker } from "@faker-js/faker";
 import { NotificationType } from "@prisma/client";
 
 export async function checkAdmin() {
-  const user = await currentUser();
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
   const res = await db.user.findUnique({
     where: {
@@ -107,7 +108,9 @@ export async function createFakeNotifications() {
 
   if (!isAdmin) return null;
 
-  const user = await currentUser();
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  
   const userIds = await getUsersId();
 
   if (!userIds) {

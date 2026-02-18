@@ -1,27 +1,29 @@
 "use client";
 
 import React from "react";
-import { useSignIn } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import { catchClerkError } from "@/lib/utils";
+import { createBrowserClient } from "@supabase/ssr";
 
 const OAuthLogin: React.FC = ({}) => {
   const [isLoading, setIsLoading] = React.useState<string | null>(null);
-  const { signIn, isLoaded: signInLoaded } = useSignIn();
 
   async function oauthSignIn(provider: "google" | "github") {
-    if (!signInLoaded) return null;
     try {
       setIsLoading(provider);
-      await signIn.authenticateWithRedirect({
-        strategy: provider === "google" ? "oauth_google" : "oauth_github",
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      );
+      await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
       });
     } catch (error) {
       setIsLoading(null);
-      catchClerkError(error);
+      console.error(error);
     }
   }
   return (

@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const CreateWithInput: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => {
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
 
   return (
     <div className="flex w-full select-none flex-col" {...props}>
@@ -14,12 +14,12 @@ const CreateWithInput: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
         <div className="flex w-full select-none">
           <Avatar className="mr-4 h-9 w-9 rounded-full outline-solid outline-1 outline-border">
             <AvatarImage
-              src={user?.imageUrl}
-              alt={user?.username ?? ""}
+              src={(user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""}
+              alt={(user?.user_metadata?.username as string) ?? ""}
               className="object-cover"
             />
             <AvatarFallback>
-              {user?.username?.slice(0, 2).toUpperCase()}
+              {((user?.user_metadata?.username as string) ?? user?.email ?? "")?.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <input

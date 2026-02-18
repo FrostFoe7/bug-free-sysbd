@@ -1,7 +1,7 @@
 import Banner from "@/components/threads-banner";
 import SiteFooter from "@/components/layouts/site-footer";
 import QRcode from "@/components/qr-code";
-import { currentUser } from "@clerk/nextjs";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 interface AuthLayoutProps {
@@ -9,7 +9,9 @@ interface AuthLayoutProps {
 }
 
 export default async function AuthLayout({ children }: AuthLayoutProps) {
-  const user = await currentUser();
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  
   if (user) redirect("/");
 
   return (

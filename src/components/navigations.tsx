@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import CreatePostCard from "@/components/cards/create-post-card";
-import { useUser } from "@clerk/nextjs";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 
 export default function Navigation() {
-  const { user } = useUser();
+  const { user } = useSupabaseAuth();
   const path = usePathname();
 
   return (
@@ -52,7 +52,7 @@ export default function Navigation() {
         />
       </Link>
       <Link
-        href={`/@${user?.username}`}
+        href={`/@${user?.user_metadata?.username || user?.email?.split("@")[0]}`}
         className="flex w-full  transform items-center  justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 hover:bg-primary active:scale-90 sm:px-8 sm:py-5"
       >
         <Icons.profile

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import { ClerkProvider } from "@clerk/nextjs";
+import { SupabaseProvider } from "@/components/providers/supabase-provider";
 import { Suspense } from "react";
 import FullscreenImageView from "@/components/fullscreen-image-view";
 import Loading from "@/app/(pages)/loading";
@@ -76,9 +76,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`no-scrollbar font-sans ${inter.variable}`}>
+    <html lang="en">
+      <body className={`no-scrollbar font-sans ${inter.variable}`}>
+        <SupabaseProvider>
           <TRPCReactProvider headers={headers()}>
             <ThemeProvider
               attribute="class"
@@ -93,8 +93,8 @@ export default function RootLayout({
               </Suspense>
             </ThemeProvider>
           </TRPCReactProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </SupabaseProvider>
+      </body>
+    </html>
   );
 }

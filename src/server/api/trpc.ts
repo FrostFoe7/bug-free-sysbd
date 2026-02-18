@@ -11,7 +11,7 @@ import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "@/server/db";
-import { currentUser } from "@clerk/nextjs";
+import { createServerClient } from "@supabase/ssr";
 
 /**
  * 1. CONTEXT
@@ -49,8 +49,6 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (opts: { req: NextRequest }) => {
-  // Fetch stuff that depends on the request
-
   return createInnerTRPCContext({
     headers: opts.req.headers,
   });
@@ -87,7 +85,26 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const middleware = t.middleware;
 
 const isAuth = middleware(async (opts) => {
-  const user = await currentUser();
+  const cookieHeader = opts.ctx.headers.get("cookie");
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieHeader?.split("; ").find(c => c.startsWith(name + "="))?.split("=")[1];
+        },
+        set() {
+          // Cookies are set in middleware
+        },
+        remove() {
+          // Cookies are removed in middleware
+        },
+      },
+    },
+  );
+
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!user?.id) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
