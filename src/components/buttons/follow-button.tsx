@@ -64,14 +64,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     },
   );
 
-  const setVariant = variant === "default" ? "default" : "outline-solid";
+  const setVariant = variant === "default" ? "default" : "outline";
   return (
     <Follow
       disabled={isLoading || isSameUser}
       onClick={() => {
         toggleFollow({ id: author.id });
       }}
-      variant={!followUpdate.current.isFollowedByMe ? setVariant : "outline-solid"}
+      variant={!followUpdate.current.isFollowedByMe ? setVariant : "outline"}
       className={cn("select-none rounded-xl px-4 py-1.5", className, {
         "opacity-80": followUpdate.current.isFollowedByMe,
       })}
