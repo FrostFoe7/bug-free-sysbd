@@ -7,7 +7,6 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 
 const nextConfig = {
-  transpilePackages: ["nsfw-filter"],
   async redirects() {
     if (process.env.NODE_ENV === "production") {
       return [
