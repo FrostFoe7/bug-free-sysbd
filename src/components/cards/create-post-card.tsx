@@ -14,7 +14,6 @@ import PostPrivacyMenu from "@/components/menus/post-privacy-menu";
 import CreatePostInput from "@/components/create-post-input";
 import Link from "next/link";
 import { Check } from "lucide-react";
-import NSFWFilter from "nsfw-filter";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import useDialog from "@/store/dialog";
@@ -91,17 +90,6 @@ const CreatePostCard: React.FC = ({}) => {
     });
 
   async function handleMutation() {
-    const checkUploadedImage = selectedFile[0];
-
-    if (checkUploadedImage) {
-      const isSafe = await NSFWFilter.isSafe(checkUploadedImage);
-
-      if (!isSafe) {
-        toast.error("Your post is not work-safe. Please revise it.");
-        return;
-      }
-    }
-
     const imgRes = await startUpload(selectedFile);
 
     const promise = replyPostInfo
