@@ -65,15 +65,17 @@ export const authRouter = createTRPCRouter({
 
           await clerkClient.users.updateUser(userId, params);
 
-          await prisma.notification.create({
-            data: {
-              isPublic: false,
-              type: "ADMIN",
-              senderUserId: env.ADMIN_USER_ID,
-              receiverUserId: created_user.id,
-              message: `Hey ${created_user.fullname}! Welcome to Threads. I hope you like this project. If so, please make sure to give it a star on GitHub and share your views on Twitter. Thanks.`,
-            },
-          });
+          if (env.ADMIN_USER_ID && env.ADMIN_USER_ID.trim() !== "") {
+            await prisma.notification.create({
+              data: {
+                isPublic: false,
+                type: "ADMIN",
+                senderUserId: env.ADMIN_USER_ID,
+                receiverUserId: created_user.id,
+                message: `Hey ${created_user.fullname}! Welcome to Threads. I hope you like this project. If so, please make sure to give it a star on GitHub and share your views on Twitter. Thanks.`,
+              },
+            });
+          }
         });
       }
 

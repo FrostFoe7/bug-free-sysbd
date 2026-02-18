@@ -20,7 +20,7 @@ export const env = createEnv({
     CLERK_SECRET_KEY: z.string(),
     UPLOADTHING_SECRET: z.string(),
     UPLOADTHING_APP_ID: z.string(),
-    ADMIN_USER_ID: z.string(),
+    ADMIN_USER_ID: z.string().optional(),
   },
 
   /**
