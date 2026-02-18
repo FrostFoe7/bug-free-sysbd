@@ -13,29 +13,29 @@ const UserProfileCard: React.FC<UserProfileCardProps> = (props) => {
   const { bio, image, username, followers, fullname, link, isAdmin } = props;
 
   return (
-    <div className="z-10 flex  h-fit flex-col space-y-4  rounded-2xl bg-background p-6 shadow-xl dark:bg-[#181818]">
-      <Link href={`/@${username}`} className="flex w-full items-center ">
-        <div className="flex w-full flex-col  gap-1 truncate ">
-          <h1 className="truncate text-[25px] font-extrabold tracking-normal ">
+    <div className="bg-background z-10 flex h-fit flex-col space-y-4 rounded-2xl p-6 shadow-xl dark:bg-[#181818]">
+      <Link href={`/@${username}`} className="flex w-full items-center">
+        <div className="flex w-full flex-col gap-1 truncate">
+          <h1 className="truncate text-[25px] font-extrabold tracking-normal">
             {fullname}
           </h1>
           <div className="flex gap-1">
             <h4 className="truncate text-[15px]">{username}</h4>
-            <span className="text-xm ml-0.5 rounded-2xl bg-primary px-1.5 py-1 text-[11px] font-medium text-[#777777]">
+            <span className="text-xm bg-primary ml-0.5 rounded-2xl px-1.5 py-1 text-[11px] font-medium text-[#777777]">
               threads.net
             </span>
           </div>
         </div>
-        <Avatar className="relative h-[64px] w-[64px] overflow-visible outline-solid outline-2 outline-border">
+        <Avatar className="outline-border relative h-[64px] w-[64px] overflow-visible outline-2 outline-solid">
           <AvatarImage
             src={image ?? ""}
             alt={fullname ?? ""}
-            className="h-min w-full rounded-full object-cover "
+            className="h-min w-full rounded-full object-cover"
           />
           <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
           {isAdmin && (
-            <div className="absolute -left-1 bottom-0">
-              <Icons.verified2 className="h-5 w-5 text-background" />
+            <div className="absolute bottom-0 -left-1">
+              <Icons.verified2 className="text-background h-5 w-5" />
             </div>
           )}
         </Avatar>
@@ -46,7 +46,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = (props) => {
           dangerouslySetInnerHTML={{
             __html: bio.slice(1, -1).replace(/\\n/g, "\n"),
           }}
-          className="text-overflow-ellipsis max-h-[100px] whitespace-pre-line text-[15px]"
+          className="text-overflow-ellipsis max-h-[100px] text-[15px] whitespace-pre-line"
         />
       )}
       <div className="flex items-center">

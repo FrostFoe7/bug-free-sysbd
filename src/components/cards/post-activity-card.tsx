@@ -33,15 +33,15 @@ const PostActivityCard: React.FC<PostActivityCardProps> = ({
           {likeCount} {likeCount === 1 ? "like" : "likes"}
         </span>
       </DialogTrigger>
-      <DialogContent className="w-full max-w-[520px] gap-0 rounded-xl border-none bg-background p-0 shadow-2xl ring-1 ring-[#393939] dark:bg-[#181818]">
-        <div className="flex items-center  justify-between p-6">
+      <DialogContent className="bg-background w-full max-w-[520px] gap-0 rounded-xl border-none p-0 shadow-2xl ring-1 ring-[#393939] dark:bg-[#181818]">
+        <div className="flex items-center justify-between p-6">
           <div className="w-full text-center text-[15px] font-medium tracking-normal">
             Post activity
           </div>
           <div className="text-right text-[15px] tracking-normal">Sort</div>
         </div>
         <section className="no-scrollbar max-h-[80vh] overflow-y-auto">
-          <Card className="mx-6 mb-2 space-y-1.5 overflow-hidden rounded-xl border-border bg-transparent p-4 ">
+          <Card className="border-border mx-6 mb-2 space-y-1.5 overflow-hidden rounded-xl bg-transparent p-4">
             <div className="flex items-center gap-2">
               <Avatar className="h-7 w-7 rounded-full">
                 <AvatarImage src={author.image ?? ""} alt="author.username" />
@@ -49,7 +49,7 @@ const PostActivityCard: React.FC<PostActivityCardProps> = ({
               </Avatar>
               <Username author={author} />
             </div>
-            <div className="w-full grow resize-none overflow-hidden truncate whitespace-pre-line wrap-break-word text-[15px] tracking-normal text-accent-foreground outline-hidden placeholder:text-[#777777]">
+            <div className="text-accent-foreground w-full grow resize-none truncate overflow-hidden text-[15px] tracking-normal wrap-break-word whitespace-pre-line outline-hidden placeholder:text-[#777777]">
               <div
                 dangerouslySetInnerHTML={{
                   __html: text.slice(1, -1).replace(/\\n/g, "\n"),
@@ -75,7 +75,7 @@ const DisplayInsight: React.FC<DisplayInsightProps> = ({ id }) => {
 
   if (isLoading) {
     return (
-      <div className="flex h-[100px] w-full items-center justify-center ">
+      <div className="flex h-[100px] w-full items-center justify-center">
         <Icons.loading className="h-11 w-11" />
       </div>
     );
@@ -88,51 +88,49 @@ const DisplayInsight: React.FC<DisplayInsightProps> = ({ id }) => {
     <>
       <div className="flex w-full items-center pl-1">
         <div>
-          <Icons.heart className="ml-6 mr-3 h-6 w-6" />
+          <Icons.heart className="mr-3 ml-6 h-6 w-6" />
         </div>
-        <div className="mr-6 flex w-full items-center justify-between border-b border-border py-5">
-          <span className="text-base font-semibold tracking-normal ">
-            Likes
-          </span>
+        <div className="border-border mr-6 flex w-full items-center justify-between border-b py-5">
+          <span className="text-base font-semibold tracking-normal">Likes</span>
           <div className="flex items-center gap-1">
             <span className="text-[15px]">{likeCount}</span>
-            <ChevronRight className="h-5 w-5  " />
+            <ChevronRight className="h-5 w-5" />
           </div>
         </div>
       </div>
-      <div className="flex w-full items-center pl-1 ">
+      <div className="flex w-full items-center pl-1">
         <div>
-          <Icons.repost className="ml-6 mr-3 h-6 w-6" />
+          <Icons.repost className="mr-3 ml-6 h-6 w-6" />
         </div>
-        <div className="mr-6 flex w-full items-center justify-between border-b border-border py-5">
-          <span className="text-base font-semibold tracking-normal ">
+        <div className="border-border mr-6 flex w-full items-center justify-between border-b py-5">
+          <span className="text-base font-semibold tracking-normal">
             Reposts
           </span>
           <div className="flex items-center gap-1">
             <span className="text-[15px]">{repostCount}</span>
-            <ChevronRight className="h-5 w-5  " />
+            <ChevronRight className="h-5 w-5" />
           </div>
         </div>
       </div>
-      <div className="flex w-full items-center p-1 pr-0 ">
+      <div className="flex w-full items-center p-1 pr-0">
         <div>
-          <Icons.quote className="ml-6 mr-3 h-6 w-6" />
+          <Icons.quote className="mr-3 ml-6 h-6 w-6" />
         </div>
-        <div className="mr-6 flex w-full items-center justify-between border-b border-border py-5">
-          <span className="text-base font-semibold tracking-normal ">
+        <div className="border-border mr-6 flex w-full items-center justify-between border-b py-5">
+          <span className="text-base font-semibold tracking-normal">
             Quotes
           </span>
           <div className="flex items-center gap-1">
             <span className="text-[15px]">0</span>
-            <ChevronRight className="h-5 w-5  " />
+            <ChevronRight className="h-5 w-5" />
           </div>
         </div>
       </div>
 
       {data?.likes.map((userData, index) => (
-        <div key={index} className="flex w-full items-center ">
-          <button className="relative ml-4 mr-3">
-            <div className="h-9 w-9 rounded-full outline-solid outline-1 outline-[#333333]">
+        <div key={index} className="flex w-full items-center">
+          <button className="relative mr-3 ml-4">
+            <div className="h-9 w-9 rounded-full outline-1 outline-[#333333] outline-solid">
               <Avatar className="h-full w-full rounded-full">
                 <AvatarImage
                   src={userData.user.image ?? ""}
@@ -143,7 +141,7 @@ const DisplayInsight: React.FC<DisplayInsightProps> = ({ id }) => {
                 </AvatarFallback>
               </Avatar>
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 rounded-2xl  border-2 border-background bg-red-500 text-background hover:scale-105 active:scale-95">
+            <div className="border-background text-background absolute -right-0.5 -bottom-0.5 rounded-2xl border-2 bg-red-500 hover:scale-105 active:scale-95">
               <Icons.heart
                 className="h-4 w-4 p-[3px] text-white"
                 fill="white"
@@ -152,9 +150,9 @@ const DisplayInsight: React.FC<DisplayInsightProps> = ({ id }) => {
           </button>
           <div
             className={cn(
-              "mr-6 flex w-full items-center justify-between py-5 ",
+              "mr-6 flex w-full items-center justify-between py-5",
               {
-                "border-b border-border": index !== data.likes.length - 1,
+                "border-border border-b": index !== data.likes.length - 1,
               },
             )}
           >
@@ -170,7 +168,7 @@ const DisplayInsight: React.FC<DisplayInsightProps> = ({ id }) => {
                     <Icons.verified className="h-3 w-3" />
                   </div>
                 </div>
-                <span className="mt-1  text-[15px] tracking-wide text-[#6A6A6A]">
+                <span className="mt-1 text-[15px] tracking-wide text-[#6A6A6A]">
                   {userData.user.fullname}
                 </span>
               </div>

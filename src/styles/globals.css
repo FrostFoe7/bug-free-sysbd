@@ -1,6 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@plugin 'tailwindcss-animate';
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -87,7 +87,7 @@
 }
 
 @utility zoom-image {
-  & [data-rmiz-modal-overlay='visible'] {
+  & [data-rmiz-modal-overlay="visible"] {
     @apply bg-[#101010]/90 backdrop-blur-xl;
   }
 

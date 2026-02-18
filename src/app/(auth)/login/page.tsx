@@ -9,7 +9,7 @@ export default function LoginPage() {
       <div className="text-center text-[15px] text-[#777777]">
         Forget password?
       </div>
-      <div className="mt-6 space-y-5 ">
+      <div className="mt-6 space-y-5">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-[#393939]" />

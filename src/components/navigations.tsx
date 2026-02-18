@@ -16,11 +16,11 @@ export default function Navigation() {
     <>
       <Link
         href={"/"}
-        className="flex w-full transform items-center justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 hover:bg-primary active:scale-90 sm:px-8 sm:py-5"
+        className="hover:bg-primary flex w-full transform items-center justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 active:scale-90 sm:px-8 sm:py-5"
       >
         <Icons.home
           className={cn(
-            "h-[26px] w-[26px]  text-lg",
+            "h-[26px] w-[26px] text-lg",
             path === "/" ? "text-foreground" : "text-secondary",
           )}
           stroke="red"
@@ -29,7 +29,7 @@ export default function Navigation() {
       </Link>
       <Link
         href={"/search"}
-        className="flex w-full transform items-center  justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 hover:bg-primary active:scale-90 sm:px-8 sm:py-5"
+        className="hover:bg-primary flex w-full transform items-center justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 active:scale-90 sm:px-8 sm:py-5"
       >
         <Icons.search
           className={cn(
@@ -41,7 +41,7 @@ export default function Navigation() {
       <CreatePostCard />
       <Link
         href={"/activity"}
-        className="flex w-full  transform items-center  justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 hover:bg-primary active:scale-90 sm:px-8 sm:py-5"
+        className="hover:bg-primary flex w-full transform items-center justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 active:scale-90 sm:px-8 sm:py-5"
       >
         <Icons.activity
           className={cn(
@@ -53,7 +53,7 @@ export default function Navigation() {
       </Link>
       <Link
         href={`/@${user?.user_metadata?.username || user?.email?.split("@")[0]}`}
-        className="flex w-full  transform items-center  justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 hover:bg-primary active:scale-90 sm:px-8 sm:py-5"
+        className="hover:bg-primary flex w-full transform items-center justify-center rounded-lg p-4 transition-all duration-150 ease-out hover:scale-100 active:scale-90 sm:px-8 sm:py-5"
       >
         <Icons.profile
           className={cn(

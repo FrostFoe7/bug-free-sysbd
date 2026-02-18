@@ -98,12 +98,12 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
           </>
         ))}
 
-        <div className="flex w-full items-center gap-3 pr-2 ">
+        <div className="flex w-full items-center gap-3 pr-2">
           <Dialog>
             <DialogTrigger asChild>
-              <button className="relative ">
-                <div className="ml-px h-9 w-9 rounded-full outline-solid outline-1 outline-border">
-                  <Avatar className="h-full w-full rounded-full ">
+              <button className="relative">
+                <div className="outline-border ml-px h-9 w-9 rounded-full outline-1 outline-solid">
+                  <Avatar className="h-full w-full rounded-full">
                     <AvatarImage
                       src={author.image ?? ""}
                       alt={author.username}
@@ -114,22 +114,22 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
                     </AvatarFallback>
                   </Avatar>
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 rounded-2xl  border-2 border-background bg-foreground text-background hover:scale-105 active:scale-95">
+                <div className="border-background bg-foreground text-background absolute -right-0.5 -bottom-0.5 rounded-2xl border-2 hover:scale-105 active:scale-95">
                   <Plus className="h-4 w-4 p-0.5 text-white dark:text-black" />
                 </div>
               </button>
             </DialogTrigger>
-            <DialogContent className="w-full max-w-[360px] rounded-2xl border-none  p-0">
+            <DialogContent className="w-full max-w-[360px] rounded-2xl border-none p-0">
               <ProfileInfoCard {...author} />
             </DialogContent>
           </Dialog>
 
-          <div className="flex w-full justify-between gap-5 pl-0.5 ">
-            <span className="flex cursor-pointer items-center justify-center gap-1.5 ">
+          <div className="flex w-full justify-between gap-5 pl-0.5">
+            <span className="flex cursor-pointer items-center justify-center gap-1.5">
               <Username author={author} />
             </span>
             <div className="flex items-center justify-between gap-3 self-stretch">
-              <time className="cursor-default self-stretch text-right text-[15px]  leading-none text-[#777777]">
+              <time className="cursor-default self-stretch text-right text-[15px] leading-none text-[#777777]">
                 {formatTimeAgo(createdAt)}
               </time>
               <PostActionMenu authorId={author.id} threadId={id} />
@@ -139,12 +139,12 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
 
         <div id={id} className="flex w-full flex-col">
           <div className="flex flex-col items-start justify-center self-stretch">
-            <div className="flex w-full flex-col items-start justify-center  self-start pt-1.5">
+            <div className="flex w-full flex-col items-start justify-center self-start pt-1.5">
               <div
                 dangerouslySetInnerHTML={{
                   __html: text.slice(1, -1).replace(/\\n/g, "\n"),
                 }}
-                className="mt-1 whitespace-pre-line text-[15px] leading-5 text-accent-foreground max-md:max-w-full"
+                className="text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full"
               />
 
               {images && images.length > 0 && (
@@ -155,7 +155,7 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
                 <PostQuoteCard quoteId={quoteId} createdAt={createdAt} />
               )}
 
-              <div className="-ml-2  mt-2 flex w-full font-bold ">
+              <div className="mt-2 -ml-2 flex w-full font-bold">
                 <LikeButton
                   likeInfo={{
                     id,
@@ -185,10 +185,10 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center  pb-3 text-center text-[15px] text-[#777777]">
+          <div className="flex items-center pb-3 text-center text-[15px] text-[#777777]">
             <Link href={`/@${author.username}/post/${id}`}>
               {replyCount > 0 && (
-                <span className="hover:underline ">
+                <span className="hover:underline">
                   {replyCount} {replyCount === 1 ? "reply" : "replies"}
                 </span>
               )}

@@ -11,13 +11,13 @@ const ReplyButton: React.FC<ReplyButtonProps> = ({ replyThreadInfo }) => {
   const { setOpenDialog, setReplyPostInfo } = useDialog();
   return (
     <div
-      className="flex h-fit w-fit items-center justify-center rounded-full p-2  hover:bg-primary active:scale-95"
+      className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 active:scale-95"
       onClick={() => {
         setOpenDialog(true);
         setReplyPostInfo(replyThreadInfo);
       }}
     >
-      <Icons.reply className="h-5 w-5 " />
+      <Icons.reply className="h-5 w-5" />
     </div>
   );
 };

@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <>
-      <div className="flex h-[80vh] flex-col justify-between ">
-        <div className="flex grow flex-col items-center justify-center gap-4 px-4 ">
+      <div className="flex h-[80vh] flex-col justify-between">
+        <div className="flex grow flex-col items-center justify-center gap-4 px-4">
           <h4 className="scroll-m-20 text-[16px] font-bold tracking-normal">
             Sorry, this page isn&#39;t available
           </h4>

@@ -29,8 +29,10 @@ export const ourFileRouter = {
           },
         },
       );
-      
-      const { data: { user } } = await supabase.auth.getUser();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       // If you throw, the user will not be able to upload
       if (!user) throw new Error("Unauthorized");

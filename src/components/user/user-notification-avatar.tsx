@@ -39,8 +39,8 @@ const UserNotificationAvtar: React.FC<UserNotificationAvtarProps> = ({
 
   return (
     <Link href={`/@${username}`}>
-      <div className="ml-px rounded-full outline-solid outline-1 outline-border">
-        <Avatar className="relative h-10 w-10 cursor-pointer overflow-visible ">
+      <div className="outline-border ml-px rounded-full outline-1 outline-solid">
+        <Avatar className="relative h-10 w-10 cursor-pointer overflow-visible">
           <AvatarImage
             src={image}
             alt={fullname}
@@ -49,7 +49,7 @@ const UserNotificationAvtar: React.FC<UserNotificationAvtarProps> = ({
           <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
           <div
             className={cn(
-              "absolute -bottom-1 -right-1 rounded-2xl border-2 border-background text-white",
+              "border-background absolute -right-1 -bottom-1 rounded-2xl border-2 text-white",
               {
                 "bg-[#fe0169]": type === "LIKE",
                 "bg-[#6e3def]": type === "FOLLOW",

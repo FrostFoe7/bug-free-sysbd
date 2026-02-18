@@ -119,16 +119,16 @@ const CreatePostCard: React.FC = ({}) => {
       loading: (
         <div className="flex w-[270px] items-center justify-start gap-1.5 p-0">
           <div>
-            <Icons.loading className="h-8 w-8 " />
+            <Icons.loading className="h-8 w-8" />
           </div>
           Posting...
         </div>
       ),
       success: (data) => {
         return (
-          <div className="flex w-[270px] items-center justify-between p-0 ">
+          <div className="flex w-[270px] items-center justify-between p-0">
             <div className="flex items-center justify-center gap-1.5">
-              <Check className="h-5 w-5 " />
+              <Check className="h-5 w-5" />
               Posted
             </div>
             <Link
@@ -169,12 +169,12 @@ const CreatePostCard: React.FC = ({}) => {
       <DialogTrigger>
         <CreateButton />
       </DialogTrigger>
-      <DialogContent className="w-full max-w-lg select-none border-none bg-transparent shadow-none outline-hidden sm:max-w-[668px]">
+      <DialogContent className="w-full max-w-lg border-none bg-transparent shadow-none outline-hidden select-none sm:max-w-[668px]">
         <h1 className="mb-2 w-full text-center font-bold text-white">
           {replyPostInfo ? <>Reply</> : <>New thread</>}
         </h1>
-        <Card className="rounded-2xl border-none bg-background shadow-2xl ring-1 ring-[#393939] ring-offset-0 dark:bg-[#181818] ">
-          <div className="no-scrollbar max-h-[70vh] overflow-y-auto p-6 ">
+        <Card className="bg-background rounded-2xl border-none shadow-2xl ring-1 ring-[#393939] ring-offset-0 dark:bg-[#181818]">
+          <div className="no-scrollbar max-h-[70vh] overflow-y-auto p-6">
             {replyPostInfo && (
               <CreatePostInput
                 isOpen={openDialog}
@@ -188,7 +188,7 @@ const CreatePostCard: React.FC = ({}) => {
               quoteInfo={quoteInfo}
             />
           </div>
-          <div className=" flex w-full items-center justify-between p-6">
+          <div className="flex w-full items-center justify-between p-6">
             <PostPrivacyMenu />
             <Button
               size={"sm"}
@@ -199,7 +199,7 @@ const CreatePostCard: React.FC = ({}) => {
                 isLoading ||
                 isReplying
               }
-              className="select-none rounded-full bg-foreground px-4 font-semibold text-white hover:bg-foreground dark:text-black"
+              className="bg-foreground hover:bg-foreground rounded-full px-4 font-semibold text-white select-none dark:text-black"
             >
               {isLoading ||
                 (isReplying && (

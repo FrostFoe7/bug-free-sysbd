@@ -10,14 +10,14 @@ const FullscreenImageView: React.FC = ({}) => {
 
   return (
     imageUrl && (
-      <div className="fixed inset-0 z-150 bg-black  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
+      <div className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-150 bg-black">
         <span
           onClick={() => setImageUrl("")}
-          className="absolute left-5 top-5 cursor-pointer rounded-full bg-[#181818] p-1 text-[1.2rem] font-thin text-[#525151] md:p-2  md:text-[1.5rem]"
+          className="absolute top-5 left-5 cursor-pointer rounded-full bg-[#181818] p-1 text-[1.2rem] font-thin text-[#525151] md:p-2 md:text-[1.5rem]"
         >
           <X className="h-8 w-8" />
         </span>
-        <div className="fixed left-[50%] top-[50%] z-999 grid max-h-screen w-full max-w-[90vw] translate-x-[-50%]  translate-y-[-50%] ">
+        <div className="fixed top-[50%] left-[50%] z-999 grid max-h-screen w-full max-w-[90vw] translate-x-[-50%] translate-y-[-50%]">
           <Image
             width={630}
             height={630}

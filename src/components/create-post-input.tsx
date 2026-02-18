@@ -101,7 +101,9 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
           />
         ) : (
           <UserAvatar
-            image={(user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""}
+            image={
+              (user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""
+            }
             username={(user?.user_metadata?.username as string) ?? ""}
             fullname={(user?.user_metadata?.full_name as string) ?? ""}
           />
@@ -123,14 +125,14 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
             </div>
           </div>
         ) : (
-          <span className="text-[15px] font-medium leading-none tracking-normal">
+          <span className="text-[15px] leading-none font-medium tracking-normal">
             {user?.user_metadata?.username || user?.email?.split("@")[0]}
           </span>
         )}
 
         {replyThreadInfo ? (
           <>
-            <div className="w-full grow resize-none overflow-hidden whitespace-pre-line wrap-break-word text-[15px] tracking-normal text-accent-foreground outline-hidden placeholder:text-[#777777]">
+            <div className="text-accent-foreground w-full grow resize-none overflow-hidden text-[15px] tracking-normal wrap-break-word whitespace-pre-line outline-hidden placeholder:text-[#777777]">
               <div
                 dangerouslySetInnerHTML={{
                   __html: replyThreadInfo.text
@@ -153,7 +155,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
               maxLength={200}
             />
             {previewURL && (
-              <div className="relative w-fit overflow-hidden rounded-[12px] border border-border">
+              <div className="border-border relative w-fit overflow-hidden rounded-[12px] border">
                 <img
                   src={previewURL}
                   alt=""
@@ -172,7 +174,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
                     setPreviewURL("");
                   }}
                   variant={"ghost"}
-                  className="absolute right-2 top-2 z-50 h-6 w-6 transform cursor-pointer rounded-full bg-background p-1 transition-transform active:scale-75 "
+                  className="bg-background absolute top-2 right-2 z-50 h-6 w-6 transform cursor-pointer rounded-full p-1 transition-transform active:scale-75"
                 >
                   <X />
                 </Button>
@@ -185,11 +187,11 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
           <div
             {...getRootProps()}
             ref={scrollDownRef}
-            className="mt-1 w-fit select-none space-y-2"
+            className="mt-1 w-fit space-y-2 select-none"
           >
-            <div className="flex select-none items-center gap-1 text-[15px] text-[#777777]">
+            <div className="flex items-center gap-1 text-[15px] text-[#777777] select-none">
               <input {...getInputProps()} />
-              <Icons.image className="h-5 w-5 transform cursor-pointer select-none transition-transform active:scale-75" />
+              <Icons.image className="h-5 w-5 transform cursor-pointer transition-transform select-none active:scale-75" />
             </div>
           </div>
         )}

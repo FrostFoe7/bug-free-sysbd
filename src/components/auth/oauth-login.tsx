@@ -31,7 +31,7 @@ const OAuthLogin: React.FC = ({}) => {
       <Button
         aria-label={`Continue with Google`}
         variant="outline"
-        className="flex h-16 w-full transform cursor-pointer select-none items-center justify-center rounded-xl border-[#333333] bg-transparent px-3 py-5 text-base text-white transition-transform hover:bg-transparent hover:text-white active:scale-95"
+        className="flex h-16 w-full transform cursor-pointer items-center justify-center rounded-xl border-[#333333] bg-transparent px-3 py-5 text-base text-white transition-transform select-none hover:bg-transparent hover:text-white active:scale-95"
         onClick={() => void oauthSignIn("google")}
         disabled={isLoading !== null}
       >
@@ -48,7 +48,7 @@ const OAuthLogin: React.FC = ({}) => {
       <Button
         aria-label={`Continue with GitHub`}
         variant="outline"
-        className="flex h-16 w-full transform cursor-pointer select-none items-center justify-center rounded-xl border-[#333333] bg-transparent px-3 py-5 text-base text-white transition-transform hover:bg-transparent hover:text-white active:scale-95"
+        className="flex h-16 w-full transform cursor-pointer items-center justify-center rounded-xl border-[#333333] bg-transparent px-3 py-5 text-base text-white transition-transform select-none hover:bg-transparent hover:text-white active:scale-95"
         onClick={() => void oauthSignIn("github")}
         disabled={isLoading !== null}
       >

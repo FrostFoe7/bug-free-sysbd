@@ -19,7 +19,7 @@ const PostImageCard: React.FC<PostImageCardProps> = ({ image }) => {
   // const { base64 } = await getPlaiceholder(buffer)
 
   return (
-    <div className="relative mt-2.5 w-fit cursor-pointer overflow-hidden rounded-[12px] border border-border">
+    <div className="border-border relative mt-2.5 w-fit cursor-pointer overflow-hidden rounded-[12px] border">
       <Image
         loading="lazy"
         src={image ?? ""}
@@ -29,7 +29,7 @@ const PostImageCard: React.FC<PostImageCardProps> = ({ image }) => {
         onClick={() => {
           setImageUrl(image);
         }}
-        className="max-h-[520px] w-max rounded-[12px]  object-contain"
+        className="max-h-[520px] w-max rounded-[12px] object-contain"
       />
     </div>
   );

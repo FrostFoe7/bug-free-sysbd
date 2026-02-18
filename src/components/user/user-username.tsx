@@ -21,7 +21,7 @@ const UserUsername: React.FC<UserUsernameProps> = ({ author }) => {
           href={`/@${author.username}`}
           className="flex w-fit cursor-pointer items-center justify-center gap-1.5 hover:underline"
         >
-          <h1 className="text-[15px] font-semibold leading-0 text-accent-foreground">
+          <h1 className="text-accent-foreground text-[15px] leading-0 font-semibold">
             {author.username}
           </h1>
           {author.isAdmin && <Icons.verified className="h-3 w-3" />}

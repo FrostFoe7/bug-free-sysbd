@@ -30,19 +30,19 @@ export default function SiteHeader() {
           : "bg-transparent",
       )}
     >
-      <nav className="px-4 sm:container sm:max-w-[1250px] ">
+      <nav className="px-4 sm:container sm:max-w-[1250px]">
         <div className="relative z-50 flex h-full max-h-[60px] w-full items-center justify-between py-1 sm:max-h-full">
           <Link
             href={"/"}
-            className="z-50 flex w-full transform cursor-pointer items-center justify-center gap-2.5  py-4 text-2xl font-semibold tracking-wide transition-all duration-150 ease-out hover:scale-105 active:scale-95 sm:w-fit "
+            className="z-50 flex w-full transform cursor-pointer items-center justify-center gap-2.5 py-4 text-2xl font-semibold tracking-wide transition-all duration-150 ease-out hover:scale-105 active:scale-95 sm:w-fit"
           >
             <Icons.logo className="h-[34px] w-[34px]" />
           </Link>
-          <div className="hidden w-full max-w-[480px] items-center justify-between sm:flex ">
+          <div className="hidden w-full max-w-[480px] items-center justify-between sm:flex">
             <Navigation />
           </div>
           {isMobile ? (
-            <div className="absolute right-0 top-2/4 z-999 -translate-y-2/4">
+            <div className="absolute top-2/4 right-0 z-999 -translate-y-2/4">
               <NavigationMenu />
             </div>
           ) : (

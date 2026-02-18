@@ -72,7 +72,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         toggleFollow({ id: author.id });
       }}
       variant={!followUpdate.current.isFollowedByMe ? setVariant : "outline"}
-      className={cn("select-none rounded-xl px-4 py-1.5", className, {
+      className={cn("rounded-xl px-4 py-1.5 select-none", className, {
         "opacity-80": followUpdate.current.isFollowedByMe,
       })}
     >

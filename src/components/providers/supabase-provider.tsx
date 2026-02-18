@@ -12,12 +12,14 @@ type SupabaseContextType = {
   signOut: () => Promise<void>;
 };
 
-const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined);
+const SupabaseContext = createContext<SupabaseContextType | undefined>(
+  undefined,
+);
 
 export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -25,7 +27,11 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
       cookies: {
         get(name: string) {
           try {
-            return document.cookie.match(new RegExp(`(^|;\\s*)(${name})=([^;]*)`))?.[3] ?? "";
+            return (
+              document.cookie.match(
+                new RegExp(`(^|;\\s*)(${name})=([^;]*)`),
+              )?.[3] ?? ""
+            );
           } catch {
             return "";
           }
@@ -56,7 +62,9 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -65,7 +73,10 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   }, [supabase]);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     return { error: error as Error | null };
   };
 
@@ -79,7 +90,9 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <SupabaseContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <SupabaseContext.Provider
+      value={{ user, loading, signIn, signUp, signOut }}
+    >
       {children}
     </SupabaseContext.Provider>
   );

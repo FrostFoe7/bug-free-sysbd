@@ -135,7 +135,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
               <h2 className="scroll-m-20 text-4xl font-bold tracking-wide">
                 Profile
               </h2>
-              <span className="leading-7 text-muted-foreground ">
+              <span className="text-muted-foreground leading-7">
                 Customize your Threads profile
               </span>
               <Card className="my-4 w-full rounded-2xl bg-transparent p-6 px-8 sm:mt-10">
@@ -143,16 +143,20 @@ export default function AccountSetupForm({ username }: { username: string }) {
                   <div className="flex items-center justify-between">
                     <div className="w-full">
                       <Label htmlFor="username">Name</Label>
-                      <div className=" my-1 flex h-7  w-full items-center gap-2">
+                      <div className="my-1 flex h-7 w-full items-center gap-2">
                         <Lock className="h-4 w-4 text-[#4D4D4D]" />
-                        <div className="w-full grow select-none overflow-hidden wrap-break-word text-[15px] tracking-wide text-accent-foreground outline-hidden">
+                        <div className="text-accent-foreground w-full grow overflow-hidden text-[15px] tracking-wide wrap-break-word outline-hidden select-none">
                           {`${getFullName((user?.user_metadata?.first_name as string) ?? "", (user?.user_metadata?.last_name as string) ?? "")} ${"(" + userAccountData?.username + ")"}`}
                         </div>
                       </div>
                     </div>
-                    <Avatar className="h-12 w-12 rounded-full outline-solid outline-1 outline-border ">
+                    <Avatar className="outline-border h-12 w-12 rounded-full outline-1 outline-solid">
                       <AvatarImage
-                        src={(user?.user_metadata?.avatar_url as string) ?? user?.email ?? ""}
+                        src={
+                          (user?.user_metadata?.avatar_url as string) ??
+                          user?.email ??
+                          ""
+                        }
                         alt={(user?.user_metadata?.username as string) ?? ""}
                         className="object-cover"
                       />
@@ -162,11 +166,11 @@ export default function AccountSetupForm({ username }: { username: string }) {
                     </Avatar>
                   </div>
                   <Label htmlFor="bio">Bio</Label>
-                  <div className="flex gap-2 ">
+                  <div className="flex gap-2">
                     <Plus className="mt-1 h-4 w-4 text-[#4D4D4D]" />
                     <ResizeTextarea
                       name="bio"
-                      className="max-h-[100px] select-none whitespace-break-spaces"
+                      className="max-h-[100px] whitespace-break-spaces select-none"
                       maxLength={100}
                       value={userAccountData.bio!}
                       onChange={handleFieldChange}
@@ -181,12 +185,12 @@ export default function AccountSetupForm({ username }: { username: string }) {
                       <FormItem>
                         <FormLabel>Link</FormLabel>
                         <FormControl>
-                          <div className=" my-1 flex h-7  items-center gap-2">
+                          <div className="my-1 flex h-7 items-center gap-2">
                             <Plus className="h-4 w-4 text-[#4D4D4D]" />
                             <Input
                               maxLength={50}
                               type="url"
-                              className="min-h-min select-none  resize-none  whitespace-break-spaces rounded-none border-0 bg-transparent p-0 text-[15px] text-accent-foreground outline-hidden ring-0 placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="text-accent-foreground min-h-min resize-none rounded-none border-0 bg-transparent p-0 text-[15px] whitespace-break-spaces ring-0 outline-hidden select-none placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
                               placeholder="Add link"
                               {...field}
                             />
@@ -199,7 +203,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
               </Card>
               <Button
                 type="submit"
-                className="w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+                className="bg-foreground hover:bg-foreground w-full rounded-xl text-white select-none dark:text-black"
               >
                 Continue &rarr;
               </Button>
@@ -211,7 +215,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
           <h2 className="scroll-m-20 text-4xl font-bold tracking-wide">
             Privacy
           </h2>
-          <span className="text-center leading-7 text-muted-foreground ">
+          <span className="text-muted-foreground text-center leading-7">
             Your privacy can be different on Threads and Instagarm.
           </span>
 
@@ -227,7 +231,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
               />
               <Label
                 htmlFor="public"
-                className="flex flex-col  rounded-xl border-2 border-muted  bg-transparent px-6 py-5 text-sm font-normal text-muted-foreground peer-data-[state=checked]:border-foreground [&:has([data-state=checked])]:border-foreground"
+                className="border-muted text-muted-foreground peer-data-[state=checked]:border-foreground [&:has([data-state=checked])]:border-foreground flex flex-col rounded-xl border-2 bg-transparent px-6 py-5 text-sm font-normal"
                 onClick={() =>
                   setUserAccountData({
                     ...userAccountData,
@@ -255,7 +259,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
               />
               <Label
                 htmlFor="private"
-                className="flex flex-col  rounded-xl border-2 border-muted  bg-transparent px-6 py-5 text-sm font-normal text-muted-foreground peer-data-[state=checked]:border-foreground [&:has([data-state=checked])]:border-foreground"
+                className="border-muted text-muted-foreground peer-data-[state=checked]:border-foreground [&:has([data-state=checked])]:border-foreground flex flex-col rounded-xl border-2 bg-transparent px-6 py-5 text-sm font-normal"
                 onClick={() =>
                   setUserAccountData({
                     ...userAccountData,
@@ -277,7 +281,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
             </div>
           </RadioGroup>
           <Button
-            className="mt-4 w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+            className="bg-foreground hover:bg-foreground mt-4 w-full rounded-xl text-white select-none dark:text-black"
             onClick={handleAccountSetup}
             disabled={isLoading}
           >

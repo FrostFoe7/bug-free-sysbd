@@ -30,7 +30,7 @@ const PostQuoteCard: React.FC<PostQuoteCardProps & { quoteId?: string }> = ({
     );
     if (isLoading) {
       return (
-        <div className="flex h-[100px] w-full items-center justify-center ">
+        <div className="flex h-[100px] w-full items-center justify-center">
           <Icons.loading className="h-11 w-11" />
         </div>
       );
@@ -62,8 +62,8 @@ const RenderCard: React.FC<PostQuoteCardProps> = ({
   createdAt,
 }) => {
   return (
-    <Card className="mt-3 w-full overflow-hidden rounded-xl border-border bg-transparent p-4">
-      <div className="mb-1.5 flex items-center justify-between ">
+    <Card className="border-border mt-3 w-full overflow-hidden rounded-xl bg-transparent p-4">
+      <div className="mb-1.5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <UserAvatar
             fullname={author?.fullname}
@@ -78,7 +78,7 @@ const RenderCard: React.FC<PostQuoteCardProps> = ({
         </time>
       </div>
       {text && (
-        <span className="w-full grow resize-none overflow-hidden truncate whitespace-pre-line wrap-break-word text-[15px] tracking-normal text-accent-foreground outline-hidden placeholder:text-[#777777]">
+        <span className="text-accent-foreground w-full grow resize-none truncate overflow-hidden text-[15px] tracking-normal wrap-break-word whitespace-pre-line outline-hidden placeholder:text-[#777777]">
           <div
             dangerouslySetInnerHTML={{
               __html: text.slice(1, -1).replace(/\\n/g, "\n"),

@@ -59,12 +59,12 @@ const PostCard: React.FC<PostCardProps> = ({
   return (
     <>
       <div className="flex w-full gap-2 pt-4">
-        <div className="flex flex-col items-center gap-1.5 ">
+        <div className="flex flex-col items-center gap-1.5">
           <Dialog>
             <DialogTrigger asChild>
-              <button className="relative ">
-                <div className="ml-px h-9 w-9 rounded-full outline-solid outline-1 outline-border">
-                  <Avatar className="h-full w-full rounded-full ">
+              <button className="relative">
+                <div className="outline-border ml-px h-9 w-9 rounded-full outline-1 outline-solid">
+                  <Avatar className="h-full w-full rounded-full">
                     <AvatarImage
                       src={author.image ?? ""}
                       alt={author.username}
@@ -75,43 +75,40 @@ const PostCard: React.FC<PostCardProps> = ({
                     </AvatarFallback>
                   </Avatar>
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 rounded-2xl  border-2 border-background bg-foreground text-background hover:scale-105 active:scale-95">
+                <div className="border-background bg-foreground text-background absolute -right-0.5 -bottom-0.5 rounded-2xl border-2 hover:scale-105 active:scale-95">
                   <Plus className="h-4 w-4 p-0.5 text-white dark:text-black" />
                 </div>
               </button>
             </DialogTrigger>
-            <DialogContent className="w-full max-w-[360px] rounded-2xl border-none  p-0">
+            <DialogContent className="w-full max-w-[360px] rounded-2xl border-none p-0">
               <ProfileInfoCard {...author} />
             </DialogContent>
           </Dialog>
 
           {replyCount > 0 && (
-            <div className="my-px h-full w-0.5 rounded-full  bg-[#D8D8D8] dark:bg-[#313639]" />
+            <div className="my-px h-full w-0.5 rounded-full bg-[#D8D8D8] dark:bg-[#313639]" />
           )}
         </div>
 
         <div className="flex w-full flex-col px-2">
-          <div className="flex flex-col items-start justify-center self-stretch max-md:max-w-full  ">
-            <div className="flex w-full flex-col items-start justify-center  self-start pt-0">
-              <div className=" flex w-full justify-between gap-5 self-start py-px max-md:max-w-full max-md:flex-wrap ">
+          <div className="flex flex-col items-start justify-center self-stretch max-md:max-w-full">
+            <div className="flex w-full flex-col items-start justify-center self-start pt-0">
+              <div className="flex w-full justify-between gap-5 self-start py-px max-md:max-w-full max-md:flex-wrap">
                 <Username author={author} />
                 <div className="flex items-center justify-between gap-3 self-stretch">
-                  <time className="cursor-default self-stretch text-right text-[15px]  leading-none text-[#777777]">
+                  <time className="cursor-default self-stretch text-right text-[15px] leading-none text-[#777777]">
                     {formatTimeAgo(createdAt)}
                   </time>
                   <PostActionMenu authorId={author.id} threadId={id} />
                 </div>
               </div>
 
-              <Link
-                href={`/@${author.username}/post/${id}`}
-                className="w-full "
-              >
+              <Link href={`/@${author.username}/post/${id}`} className="w-full">
                 <div
                   dangerouslySetInnerHTML={{
                     __html: text.slice(1, -1).replace(/\\n/g, "\n"),
                   }}
-                  className="mt-1 whitespace-pre-line text-[15px] leading-5 text-accent-foreground max-md:max-w-full"
+                  className="text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full"
                 />
               </Link>
 
@@ -121,7 +118,7 @@ const PostCard: React.FC<PostCardProps> = ({
 
               {quoteId && <PostQuoteCard quoteId={quoteId} />}
 
-              <div className="-ml-2  mt-2 flex w-full font-bold">
+              <div className="mt-2 -ml-2 flex w-full font-bold">
                 <LikeButton
                   likeInfo={{
                     id,
@@ -153,25 +150,22 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
 
       <div
-        className={cn("flex select-none items-center pb-2", {
-          " gap-2 pb-3.5 ": replyCount > 0 || likeCount > 0,
+        className={cn("flex items-center pb-2 select-none", {
+          "gap-2 pb-3.5": replyCount > 0 || likeCount > 0,
         })}
       >
         <div
-          className={cn(
-            "invisible flex w-[36px] items-center justify-center ",
-            {
-              visible: replyCount > 0,
-            },
-          )}
+          className={cn("invisible flex w-[36px] items-center justify-center", {
+            visible: replyCount > 0,
+          })}
         >
           <UserRepliesImages author={getPostReplies} />
         </div>
 
-        <div className="flex items-center  px-2 text-center text-[15px] text-[#777777]">
+        <div className="flex items-center px-2 text-center text-[15px] text-[#777777]">
           <Link href={`/@${author.username}/post/${id}`}>
             {replyCount > 0 && (
-              <span className="hover:underline ">
+              <span className="hover:underline">
                 {replyCount} {replyCount === 1 ? "reply" : "replies"}
               </span>
             )}

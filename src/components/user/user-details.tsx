@@ -28,27 +28,27 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
   const lastSegment = segments[segments.length - 1];
 
   return (
-    <div className=" z-10 mt-4 flex w-full flex-col space-y-4">
+    <div className="z-10 mt-4 flex w-full flex-col space-y-4">
       <div className="w-fullitems-center flex">
         <div className="flex w-full flex-col gap-1 p-3 pl-0">
           <h1 className="text-2xl font-bold tracking-normal">{fullname}</h1>
           <div className="flex gap-1">
             <h4 className="text-[15px]">{username}</h4>
-            <span className="text-xm ml-0.5 rounded-2xl bg-primary px-1.5 py-1 text-[11px] font-medium text-[#777777]">
+            <span className="text-xm bg-primary ml-0.5 rounded-2xl px-1.5 py-1 text-[11px] font-medium text-[#777777]">
               threads.net
             </span>
           </div>
         </div>
-        <Avatar className="relative h-[80px] w-[80px] overflow-visible outline-solid outline-2 outline-border">
+        <Avatar className="outline-border relative h-[80px] w-[80px] overflow-visible outline-2 outline-solid">
           <AvatarImage
             src={image ?? ""}
             alt={fullname ?? ""}
-            className="h-min w-full rounded-full object-cover "
+            className="h-min w-full rounded-full object-cover"
           />
           <AvatarFallback></AvatarFallback>
           {isAdmin && (
-            <div className="absolute -left-0.5 bottom-0">
-              <Icons.verified2 className="h-6 w-6 text-background" />
+            <div className="absolute bottom-0 -left-0.5">
+              <Icons.verified2 className="text-background h-6 w-6" />
             </div>
           )}
         </Avatar>
@@ -59,12 +59,12 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
           dangerouslySetInnerHTML={{
             __html: bio?.slice(1, -1).replace(/\\n/g, "\n"),
           }}
-          className="whitespace-pre-line text-[15px]"
+          className="text-[15px] whitespace-pre-line"
         />
       )}
 
       <div className="flex items-center justify-between">
-        <div className="hidden w-full items-center -space-x-1 overflow-hidden sm:flex ">
+        <div className="hidden w-full items-center -space-x-1 overflow-hidden sm:flex">
           <div className="flex items-center">
             <UserFollowers followers={followers} showImage={true} />
 
@@ -97,19 +97,19 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
           <Button
             size={"sm"}
             variant="outline"
-            className="w-full cursor-not-allowed rounded-xl border-[#333333] py-1 text-[16px] font-semibold tracking-normal active:scale-95 sm:w-auto "
+            className="w-full cursor-not-allowed rounded-xl border-[#333333] py-1 text-[16px] font-semibold tracking-normal active:scale-95 sm:w-auto"
           >
             Mention
           </Button>
         </div>
       )}
-      <div className="flex w-full border-b border-border">
+      <div className="border-border flex w-full border-b">
         <Link
           href={`/${basePath}`}
           className={cn(
-            "flex h-12 w-full items-center justify-center  text-center  font-medium  text-neutral-600 duration-200",
+            "flex h-12 w-full items-center justify-center text-center font-medium text-neutral-600 duration-200",
             {
-              "border-b-2 border-foreground text-foreground":
+              "border-foreground text-foreground border-b-2":
                 lastSegment === basePath,
             },
           )}
@@ -119,9 +119,9 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
         <Link
           href={`/${basePath}/replies`}
           className={cn(
-            "flex h-12 w-full items-center justify-center  text-center  font-medium text-neutral-600 duration-200",
+            "flex h-12 w-full items-center justify-center text-center font-medium text-neutral-600 duration-200",
             {
-              "border-b-2 border-foreground text-foreground":
+              "border-foreground text-foreground border-b-2":
                 lastSegment === "replies",
             },
           )}
@@ -131,9 +131,9 @@ const UserProfile: React.FC<UserProfileInfoProps> = (props) => {
         <Link
           href={`/${basePath}/reposts`}
           className={cn(
-            "flex h-12 w-full items-center justify-center  text-center  font-medium  text-neutral-600 duration-200",
+            "flex h-12 w-full items-center justify-center text-center font-medium text-neutral-600 duration-200",
             {
-              "border-b-2 border-foreground text-foreground":
+              "border-foreground text-foreground border-b-2":
                 lastSegment === "reposts",
             },
           )}

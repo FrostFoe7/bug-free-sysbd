@@ -20,7 +20,7 @@ const RepliesPage: React.FC = ({}) => {
 
   if (isLoading) {
     return (
-      <div className="mb-[10vh] flex h-[100px] w-full items-center  justify-center sm:mb-0">
+      <div className="mb-[10vh] flex h-[100px] w-full items-center justify-center sm:mb-0">
         <Icons.loading className="h-11 w-11" />
       </div>
     );

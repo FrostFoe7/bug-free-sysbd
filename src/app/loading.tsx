@@ -6,8 +6,8 @@ export default function RootLoading() {
   const MetaImage = "/meta.png";
 
   return (
-    <div className="flex h-screen flex-col justify-between ">
-      <div className="flex grow items-center justify-center ">
+    <div className="flex h-screen flex-col justify-between">
+      <div className="flex grow items-center justify-center">
         <Image
           alt="Threads"
           src={LogoImage}
@@ -16,7 +16,7 @@ export default function RootLoading() {
           priority
         />
       </div>
-      <div className="mb-6  flex w-full items-center justify-center">
+      <div className="mb-6 flex w-full items-center justify-center">
         <Image
           priority
           alt="Meta"

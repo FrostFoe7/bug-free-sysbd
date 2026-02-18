@@ -57,11 +57,18 @@ export async function middleware(request: NextRequest) {
   // Refresh session if expired
   await supabase.auth.getUser();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const publicRoutes = ["/login", "/sso-callback", "/api", "/opengraph-image.png"];
-  const isPublicRoute = publicRoutes.some(route => 
-    request.nextUrl.pathname.startsWith(route)
+  const publicRoutes = [
+    "/login",
+    "/sso-callback",
+    "/api",
+    "/opengraph-image.png",
+  ];
+  const isPublicRoute = publicRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route),
   );
 
   if (!isPublicRoute && !user) {
@@ -74,5 +81,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

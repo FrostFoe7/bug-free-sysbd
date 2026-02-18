@@ -24,24 +24,24 @@ const ShareButton: React.FC<ShareButtonProps> = ({ id, author }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex h-fit w-fit items-center justify-center rounded-full p-2 hover:bg-primary active:scale-95">
-          <Icons.share className="h-5 w-5 " />
+        <div className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 active:scale-95">
+          <Icons.share className="h-5 w-5" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className="w-[190px] rounded-2xl bg-background p-0 shadow-xl  dark:bg-[#181818]"
+        className="bg-background w-[190px] rounded-2xl p-0 shadow-xl dark:bg-[#181818]"
       >
         <DropdownMenuItem
           onClick={copyLinkToClipboard}
-          className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal  focus:bg-transparent  active:bg-primary-foreground"
+          className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent"
         >
           Copy link
         </DropdownMenuItem>
         <DropdownMenuSeparator className="my-0 h-[1.2px]" />
         <DropdownMenuItem
           onClick={copyLinkToClipboard}
-          className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground "
+          className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent"
         >
           Copy embed code
         </DropdownMenuItem>

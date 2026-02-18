@@ -34,7 +34,7 @@ export default function LoginForm() {
     startTransition(async () => {
       try {
         const { error } = await signIn(data.identifier, data.password);
-        
+
         if (error) {
           toast.error(error.message || "Invalid email or password");
         } else {
@@ -48,7 +48,7 @@ export default function LoginForm() {
 
   return (
     <div>
-      <span className="select-none font-bold text-white">
+      <span className="font-bold text-white select-none">
         Log in with your account
       </span>
 
@@ -68,15 +68,13 @@ export default function LoginForm() {
                     <Input
                       autoFocus
                       className={cn(
-                        "h-14 min-h-min rounded-xl border-none bg-[#1e1e1e] px-4 text-[15px] font-medium tracking-normal  text-white outline-hidden ring-0 placeholder:text-[#777777] focus-visible:ring-1 focus-visible:ring-[#393939] focus-visible:ring-offset-0 dark:focus-visible:ring-[#393939]",
+                        "h-14 min-h-min rounded-xl border-none bg-[#1e1e1e] px-4 text-[15px] font-medium tracking-normal text-white ring-0 outline-hidden placeholder:text-[#777777] focus-visible:ring-1 focus-visible:ring-[#393939] focus-visible:ring-offset-0 dark:focus-visible:ring-[#393939]",
                         {
                           "placeholder:text-red-700 focus-visible:ring-red-700 dark:focus-visible:ring-red-700":
                             error,
                         },
                       )}
-                      placeholder={
-                        error ? error.message : "Email"
-                      }
+                      placeholder={error ? error.message : "Email"}
                       type="text"
                       {...field}
                     />
@@ -95,7 +93,7 @@ export default function LoginForm() {
                   <FormControl>
                     <Input
                       className={cn(
-                        "h-14 min-h-min rounded-xl  border-none bg-[#1e1e1e] px-4  text-[15px] font-medium tracking-normal  text-white outline-hidden ring-0 placeholder:text-[#777777] focus-visible:ring-1 focus-visible:ring-[#393939] focus-visible:ring-offset-0 dark:focus-visible:ring-[#393939]",
+                        "h-14 min-h-min rounded-xl border-none bg-[#1e1e1e] px-4 text-[15px] font-medium tracking-normal text-white ring-0 outline-hidden placeholder:text-[#777777] focus-visible:ring-1 focus-visible:ring-[#393939] focus-visible:ring-offset-0 dark:focus-visible:ring-[#393939]",
                         {
                           "placeholder:text-red-700 focus-visible:ring-red-700 dark:focus-visible:ring-red-700":
                             error,

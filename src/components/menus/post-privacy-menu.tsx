@@ -25,30 +25,30 @@ const PostPrivacyMenu: React.FC = ({}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="z-50 cursor-pointer select-none text-[15px] tracking-normal text-[#777777] outline-hidden">
+        <button className="z-50 cursor-pointer text-[15px] tracking-normal text-[#777777] outline-hidden select-none">
           {privacyDisplayText}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className=" z-1000 mt-1 w-[190px] rounded-2xl bg-background p-0 shadow-2xl dark:bg-[#181818]"
+        className="bg-background z-1000 mt-1 w-[190px] rounded-2xl p-0 shadow-2xl dark:bg-[#181818]"
       >
         <DropdownMenuItem
-          className="cursor-pointer select-none rounded-none  px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground"
+          className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent"
           onClick={() => setPostPrivacy("ANYONE")}
         >
           Anyone
         </DropdownMenuItem>
-        <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
+        <DropdownMenuSeparator className="my-0 h-[1.2px]" />
         <DropdownMenuItem
-          className="cursor-pointer select-none rounded-none  px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground"
+          className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent"
           onClick={() => setPostPrivacy("FOLLOWED")}
         >
           Profiles you follow
         </DropdownMenuItem>
-        <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
+        <DropdownMenuSeparator className="my-0 h-[1.2px]" />
         <DropdownMenuItem
-          className="cursor-pointer select-none rounded-none  px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground"
+          className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent"
           onClick={() => setPostPrivacy("MENTIONED")}
         >
           Mentioned only

@@ -25,44 +25,44 @@ const PostActionMenu: React.FC<PostActionMenuProps> = ({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className='relative flex cursor-pointer items-center justify-center hover:before:absolute hover:before:-inset-2 hover:before:z-[-1] hover:before:rounded-full hover:before:bg-primary hover:before:content-[""] '>
-            <MoreHorizontal className="aspect-square h-4 w-4 flex-1 overflow-hidden object-cover object-center  " />
+          <div className='hover:before:bg-primary relative flex cursor-pointer items-center justify-center hover:before:absolute hover:before:-inset-2 hover:before:z-[-1] hover:before:rounded-full hover:before:content-[""]'>
+            <MoreHorizontal className="aspect-square h-4 w-4 flex-1 overflow-hidden object-cover object-center" />
           </div>
         </DropdownMenuTrigger>
         {!isLoggedUser ? (
           <DropdownMenuContent
             align="end"
-            className="mt-1 w-[190px] rounded-2xl bg-background p-0 shadow-xl dark:bg-[#181818]"
+            className="bg-background mt-1 w-[190px] rounded-2xl p-0 shadow-xl dark:bg-[#181818]"
           >
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal  focus:bg-transparent active:bg-primary-foreground">
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
               Mute
             </DropdownMenuItem>
-            <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none  px-4 py-3 text-[15px] font-bold tracking-normal text-red-700 focus:bg-transparent focus:text-red-700 active:bg-primary-foreground">
+            <DropdownMenuSeparator className="my-0 h-[1.2px]" />
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-bold tracking-normal text-red-700 select-none focus:bg-transparent focus:text-red-700">
               Block
             </DropdownMenuItem>
-            <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground">
+            <DropdownMenuSeparator className="my-0 h-[1.2px]" />
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
               Hide
             </DropdownMenuItem>
-            <DropdownMenuSeparator className=" my-0 h-[1.2px] " />
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-bold tracking-normal text-red-700 focus:bg-transparent focus:text-red-700 active:bg-primary-foreground">
+            <DropdownMenuSeparator className="my-0 h-[1.2px]" />
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-bold tracking-normal text-red-700 select-none focus:bg-transparent focus:text-red-700">
               Report
             </DropdownMenuItem>
           </DropdownMenuContent>
         ) : (
           <DropdownMenuContent
             align="end"
-            className="mt-1 w-[190px] rounded-2xl bg-background p-0 shadow-xl dark:bg-[#181818]"
+            className="bg-background mt-1 w-[190px] rounded-2xl p-0 shadow-xl dark:bg-[#181818]"
           >
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground">
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
               Who can reply
             </DropdownMenuItem>
-            <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
-            <DropdownMenuItem className="cursor-pointer select-none rounded-none  px-4 py-3 text-[15px] font-semibold tracking-normal focus:bg-transparent active:bg-primary-foreground ">
+            <DropdownMenuSeparator className="my-0 h-[1.2px]" />
+            <DropdownMenuItem className="active:bg-primary-foreground cursor-pointer rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
               Hide like count
             </DropdownMenuItem>
-            <DropdownMenuSeparator className=" my-0 h-[1.2px] " />
+            <DropdownMenuSeparator className="my-0 h-[1.2px]" />
             <AreYouSure id={threadId} />
           </DropdownMenuContent>
         )}

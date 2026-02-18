@@ -42,16 +42,16 @@ const ConfirmationCard: React.FC<ConfirmationCardProps> = ({ id }) => {
       loading: (
         <div className="flex w-[270px] items-center justify-start gap-1.5 p-0">
           <div>
-            <Icons.loading className="h-8 w-8 " />
+            <Icons.loading className="h-8 w-8" />
           </div>
           Deleting...
         </div>
       ),
       success: () => {
         return (
-          <div className="flex w-[270px] items-center justify-between p-0 ">
+          <div className="flex w-[270px] items-center justify-between p-0">
             <div className="flex items-center justify-center gap-1.5">
-              <Check className="h-5 w-5 " />
+              <Check className="h-5 w-5" />
               Deleted
             </div>
           </div>
@@ -63,20 +63,20 @@ const ConfirmationCard: React.FC<ConfirmationCardProps> = ({ id }) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full cursor-pointer select-none rounded-none px-4 py-3 text-start text-[15px] font-bold tracking-normal text-red-700   focus:bg-transparent focus:text-red-700 active:bg-primary-foreground">
+      <AlertDialogTrigger className="active:bg-primary-foreground w-full cursor-pointer rounded-none px-4 py-3 text-start text-[15px] font-bold tracking-normal text-red-700 select-none focus:bg-transparent focus:text-red-700">
         Delete
       </AlertDialogTrigger>
-      <AlertDialogContent className="w-full max-w-[280px] gap-0 overflow-hidden rounded-2xl border-border bg-background p-0 shadow-xl dark:bg-[#181818]">
-        <div className="flex w-full items-center justify-center border-b border-border py-5 text-[16px] font-bold">
+      <AlertDialogContent className="border-border bg-background w-full max-w-[280px] gap-0 overflow-hidden rounded-2xl p-0 shadow-xl dark:bg-[#181818]">
+        <div className="border-border flex w-full items-center justify-center border-b py-5 text-[16px] font-bold">
           Are you sure?
         </div>
         <div className="flex items-center justify-center">
-          <AlertDialogClose className=" mt-0 flex w-full cursor-pointer select-none items-center justify-center rounded-none border-r border-border px-4 py-4 text-[15px] font-semibold tracking-normal focus:bg-transparent  active:bg-primary-foreground">
+          <AlertDialogClose className="border-border active:bg-primary-foreground mt-0 flex w-full cursor-pointer items-center justify-center rounded-none border-r px-4 py-4 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
             Cancel
           </AlertDialogClose>
           <AlertDialogDelete
             onClick={handleDeletePost}
-            className="mt-0 flex w-full cursor-pointer select-none items-center justify-center rounded-none border-border px-4 py-4 text-[15px] font-semibold tracking-normal text-red-600  focus:bg-transparent   active:bg-primary-foreground"
+            className="border-border active:bg-primary-foreground mt-0 flex w-full cursor-pointer items-center justify-center rounded-none px-4 py-4 text-[15px] font-semibold tracking-normal text-red-600 select-none focus:bg-transparent"
           >
             Delete
           </AlertDialogDelete>

@@ -38,7 +38,7 @@ export const authRouter = createTRPCRouter({
 
       const fullname = getFullName(
         (user?.user_metadata?.first_name as string) ?? "",
-        (user?.user_metadata?.last_name as string) ?? ""
+        (user?.user_metadata?.last_name as string) ?? "",
       );
 
       const dbUser = await ctx.db.user.findUnique({

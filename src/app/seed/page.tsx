@@ -87,11 +87,11 @@ const SeedPage: React.FC = ({}) => {
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="flex w-full  max-w-sm flex-col gap-3">
+      <div className="flex w-full max-w-sm flex-col gap-3">
         <Button
           onClick={handleUser}
           disabled={isLoading !== null}
-          className="w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+          className="bg-foreground hover:bg-foreground w-full rounded-xl text-white select-none dark:text-black"
         >
           {isLoading === "user" && (
             <Icons.spinner
@@ -105,7 +105,7 @@ const SeedPage: React.FC = ({}) => {
         <Button
           onClick={handlePost}
           disabled={isLoading !== null}
-          className="w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+          className="bg-foreground hover:bg-foreground w-full rounded-xl text-white select-none dark:text-black"
         >
           {isLoading === "post" && (
             <Icons.spinner
@@ -119,7 +119,7 @@ const SeedPage: React.FC = ({}) => {
         <Button
           onClick={handleDeleteUsers}
           disabled={isLoading !== null}
-          className="w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+          className="bg-foreground hover:bg-foreground w-full rounded-xl text-white select-none dark:text-black"
         >
           {isLoading === "delete" && (
             <Icons.spinner
@@ -133,7 +133,7 @@ const SeedPage: React.FC = ({}) => {
         <Button
           onClick={handleNotification}
           disabled={isLoading !== null}
-          className="w-full select-none rounded-xl bg-foreground text-white hover:bg-foreground dark:text-black"
+          className="bg-foreground hover:bg-foreground w-full rounded-xl text-white select-none dark:text-black"
         >
           {isLoading === "notification" && (
             <Icons.spinner

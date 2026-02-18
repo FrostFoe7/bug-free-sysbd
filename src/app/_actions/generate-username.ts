@@ -4,11 +4,11 @@ import { db } from "@/server/db";
 
 export async function generateUsername(user: { email?: string | null } | null) {
   const email = user?.email;
-  
+
   if (!email) {
     throw new Error("Email not available");
   }
-  
+
   const usernameMatch = email.match(/^(.+)@/);
 
   if (!usernameMatch) {

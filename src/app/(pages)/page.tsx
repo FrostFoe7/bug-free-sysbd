@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <div className="hidden w-full sm:flex ">
+      <div className="hidden w-full sm:flex">
         <CreateWithInput onClick={() => setOpenDialog(true)} />
       </div>
       <InfiniteScroll
@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
         next={fetchNextPage}
         hasMore={hasNextPage ?? false}
         loader={
-          <div className="mb-[10vh] flex h-[100px] w-full items-center  justify-center sm:mb-0">
+          <div className="mb-[10vh] flex h-[100px] w-full items-center justify-center sm:mb-0">
             <Icons.loading className="h-11 w-11" />
           </div>
         }

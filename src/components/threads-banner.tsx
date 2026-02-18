@@ -8,13 +8,13 @@ import Image from "next/image";
 export default function ThreadsBanner() {
   const { isMobile } = useWindow();
   return (
-    <header className="mx-auto  max-w-(--breakpoint-md) md:max-w-(--breakpoint-2xl) lg:max-w-[1800px]">
+    <header className="mx-auto max-w-(--breakpoint-md) md:max-w-(--breakpoint-2xl) lg:max-w-[1800px]">
       {isMobile ? (
-        <div className="flex items-center justify-center ">
-          <Icons.logo className="mb-6 mt-16 h-10 w-10 sm:h-16 sm:w-16" />
+        <div className="flex items-center justify-center">
+          <Icons.logo className="mt-16 mb-6 h-10 w-10 sm:h-16 sm:w-16" />
         </div>
       ) : (
-        <nav className="pointer-events-none z-50 flex w-full select-none items-center justify-between">
+        <nav className="pointer-events-none z-50 flex w-full items-center justify-between select-none">
           <Image
             width={1000}
             height={1000}

@@ -61,18 +61,18 @@ const RepostButton: React.FC<RepostButtonProps> = ({
       <DropdownMenuTrigger asChild>
         <button
           disabled={isLoading}
-          className="flex h-fit w-fit items-center justify-center rounded-full p-2 outline-hidden hover:bg-primary active:scale-95"
+          className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 outline-hidden active:scale-95"
         >
           {repostUpdate.current.isRepostedByMe ? (
-            <Icons.reposted className="h-5 w-5 " />
+            <Icons.reposted className="h-5 w-5" />
           ) : (
-            <Icons.repost className="h-5 w-5 " />
+            <Icons.repost className="h-5 w-5" />
           )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className="w-[190px] rounded-2xl bg-background p-0 shadow-xl dark:bg-[#181818]"
+        className="bg-background w-[190px] rounded-2xl p-0 shadow-xl dark:bg-[#181818]"
       >
         <DropdownMenuItem
           disabled={isLoading}
@@ -80,7 +80,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
             toggleRepost({ id });
           }}
           className={cn(
-            "w-full cursor-pointer select-none justify-between rounded-none px-4 py-3 text-[15px]  font-semibold  tracking-normal focus:bg-transparent active:bg-primary-foreground",
+            "active:bg-primary-foreground w-full cursor-pointer justify-between rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent",
             {
               "text-red-600 focus:text-red-600":
                 repostUpdate.current.isRepostedByMe,
@@ -90,13 +90,13 @@ const RepostButton: React.FC<RepostButtonProps> = ({
           {repostUpdate.current.isRepostedByMe ? <>Remove</> : <>Repost</>}
 
           <Icons.repost
-            className={cn("h-5 w-5 ", {
+            className={cn("h-5 w-5", {
               "text-red-600": repostUpdate.current.isRepostedByMe,
             })}
           />
         </DropdownMenuItem>
-        <DropdownMenuSeparator className=" my-0 h-[1.2px]" />
-        <div className="w-full cursor-pointer select-none justify-between rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal  focus:bg-transparent active:bg-primary-foreground">
+        <DropdownMenuSeparator className="my-0 h-[1.2px]" />
+        <div className="active:bg-primary-foreground w-full cursor-pointer justify-between rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
           <QuoteButton
             quoteInfo={{
               text,

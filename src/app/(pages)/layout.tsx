@@ -10,7 +10,9 @@ interface PagesLayoutProps {
 
 export default async function PagesLayout({ children }: PagesLayoutProps) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) redirect("/login");
 

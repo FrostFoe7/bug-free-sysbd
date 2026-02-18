@@ -7,7 +7,9 @@ import { NotificationType } from "@prisma/client";
 
 export async function checkAdmin() {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const res = await db.user.findUnique({
     where: {
@@ -109,8 +111,10 @@ export async function createFakeNotifications() {
   if (!isAdmin) return null;
 
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const userIds = await getUsersId();
 
   if (!userIds) {

@@ -92,7 +92,10 @@ const isAuth = middleware(async (opts) => {
     {
       cookies: {
         get(name: string) {
-          return cookieHeader?.split("; ").find(c => c.startsWith(name + "="))?.split("=")[1];
+          return cookieHeader
+            ?.split("; ")
+            .find((c) => c.startsWith(name + "="))
+            ?.split("=")[1];
         },
         set() {
           // Cookies are set in middleware
@@ -104,7 +107,9 @@ const isAuth = middleware(async (opts) => {
     },
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user?.id) {
     throw new TRPCError({ code: "UNAUTHORIZED" });

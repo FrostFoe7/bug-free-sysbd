@@ -23,7 +23,7 @@ const UserActionCard: React.FC<UserCardProps> = ({
     <div className="flex w-full flex-col">
       <div className="mt-5 flex w-full">
         <Link href={`/@${username}`}>
-          <Avatar className="relative h-10 w-10 cursor-pointer overflow-visible outline-solid outline-1 outline-border ">
+          <Avatar className="outline-border relative h-10 w-10 cursor-pointer overflow-visible outline-1 outline-solid">
             <AvatarImage
               src={image ?? ""}
               alt={fullname ?? ""}
@@ -35,7 +35,7 @@ const UserActionCard: React.FC<UserCardProps> = ({
           </Avatar>
         </Link>
         <div className="ml-3 flex w-full flex-col">
-          <div className="flex w-full  justify-between">
+          <div className="flex w-full justify-between">
             <Link
               href={`/@${username}`}
               className="flex w-full flex-col gap-1.5"
@@ -60,7 +60,7 @@ const UserActionCard: React.FC<UserCardProps> = ({
                     <Icons.verified className="h-3 w-3" />
                   </div>
                 </div>
-                <span className="mt-1  text-[15px] tracking-wide text-[#6A6A6A]">
+                <span className="mt-1 text-[15px] tracking-wide text-[#6A6A6A]">
                   {fullname}
                 </span>
               </div>

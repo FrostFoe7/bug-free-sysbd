@@ -20,7 +20,7 @@ const QuoteButton: React.FC<QuoteButtonProps> = ({ quoteInfo }) => {
       }}
     >
       Quote
-      <Icons.quote className="h-5 w-5 " />
+      <Icons.quote className="h-5 w-5" />
     </div>
   );
 };

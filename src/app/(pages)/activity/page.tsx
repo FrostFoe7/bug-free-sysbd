@@ -39,16 +39,16 @@ export default function ActivityPage() {
             />
             <div className="ml-3 flex w-full flex-col">
               <div className="flex w-full items-center justify-between">
-                <div className="flex flex-col gap-1 ">
+                <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-1">
                     <Username author={activity.senderUser} />
-                    <time className="ml-3 text-[15px] leading-none text-muted-foreground">
+                    <time className="text-muted-foreground ml-3 text-[15px] leading-none">
                       {formatTimeAgo(activity.createdAt)}
                     </time>
                   </div>
                   <Link href={`/@${activity.senderUser.username}`}>
                     {activity.type !== "ADMIN" ? (
-                      <div className="leading-0 whitespace-pre-line text-[15px] tracking-wide text-[#6A6A6A]">
+                      <div className="text-[15px] leading-0 tracking-wide whitespace-pre-line text-[#6A6A6A]">
                         <div
                           dangerouslySetInnerHTML={{
                             __html: truncateText(activity.message, 100)
@@ -58,7 +58,7 @@ export default function ActivityPage() {
                         />
                       </div>
                     ) : (
-                      <span className="text-[15px] leading-5 tracking-wide text-accent-foreground">
+                      <span className="text-accent-foreground text-[15px] leading-5 tracking-wide">
                         {activity.message}
                       </span>
                     )}

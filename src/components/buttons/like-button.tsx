@@ -47,7 +47,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
   });
 
   return (
-    <div className="flex h-fit w-fit items-center justify-center rounded-full p-2 hover:bg-primary active:scale-95">
+    <div className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 active:scale-95">
       <button disabled={isLoading}>
         <Icons.heart
           onClick={() => {
@@ -55,7 +55,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
             toggleLike({ id });
           }}
           fill={likeUpdate.current.isLikedByMe ? "#ff3040" : "transparent"}
-          className={cn("h-5 w-5 ", {
+          className={cn("h-5 w-5", {
             "text-[#ff3040]": likeUpdate.current.isLikedByMe,
           })}
         />

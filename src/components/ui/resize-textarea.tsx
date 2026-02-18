@@ -27,7 +27,7 @@ const ResizeTextarea: React.FC<TextareaProps> = ({ className, ...props }) => {
     <textarea
       style={{ height: 0 }}
       className={cn(
-        "w-full grow resize-none overflow-hidden wrap-break-word bg-transparent text-[15px] tracking-normal text-accent-foreground outline-hidden placeholder:text-[#777777]",
+        "text-accent-foreground w-full grow resize-none overflow-hidden bg-transparent text-[15px] tracking-normal wrap-break-word outline-hidden placeholder:text-[#777777]",
         className,
       )}
       ref={inputRef}
