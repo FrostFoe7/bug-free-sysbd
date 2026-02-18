@@ -101,9 +101,6 @@ importers:
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.2.35(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      nsfw-filter:
-        specifier: ^1.0.4
-        version: 1.0.4(encoding@0.1.13)(seedrandom@3.0.5)
       plaiceholder:
         specifier: ^3.0.0
         version: 3.0.0(sharp@0.33.4)
@@ -180,6 +177,9 @@ importers:
       eslint-config-next:
         specifier: ^13.5.11
         version: 13.5.11(eslint@8.57.1)(typescript@5.9.3)
+      nsfw-filter:
+        specifier: ^1.0.4
+        version: 1.0.4(encoding@0.1.13)(seedrandom@3.0.5)
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
