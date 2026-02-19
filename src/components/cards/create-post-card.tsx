@@ -19,10 +19,13 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/
 import useDialog from "@/store/dialog";
 import CreateButton from "@/components/buttons/create-button";
 import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
+import { getUserEmail } from "@/lib/utils";
 
 const CreatePostCard: React.FC = ({}) => {
   const router = useRouter();
   const path = usePathname();
+  const { user } = useSupabaseAuth();
 
   const {
     openDialog,
@@ -50,6 +53,13 @@ const CreatePostCard: React.FC = ({}) => {
       privacy: postPrivacy,
     }));
   }, [postPrivacy]);
+
+  // Fetch current user's admin status
+  const { data: currentUser } = api.user.Info.useQuery(
+    { username: user?.user_metadata?.username ?? "" },
+    { enabled: !!user?.user_metadata?.username },
+  );
+  const isAdmin = currentUser?.userDetails.isAdmin ?? false;
 
   const trpcUtils = api.useUtils();
 
@@ -211,21 +221,23 @@ const CreatePostCard: React.FC = ({}) => {
           <div className="flex w-full items-center justify-between p-6">
             <PostPrivacyMenu />
             <div className="flex items-center gap-2">
-              <AnimatedCircularProgressBar
-                className="size-8 text-[10px]"
-                max={160}
-                min={0}
-                value={threadData.text.length}
-                gaugePrimaryColor={threadData.text.length > 160 ? "#ef4444" : "#000000"}
-                gaugeSecondaryColor="#e5e5e5"
-              />
+              {!isAdmin && (
+                <AnimatedCircularProgressBar
+                  className="size-8 text-[10px]"
+                  max={160}
+                  min={0}
+                  value={threadData.text.length}
+                  gaugePrimaryColor={threadData.text.length > 160 ? "#ef4444" : "#000000"}
+                  gaugeSecondaryColor="#e5e5e5"
+                />
+              )}
               <Button
                 size={"sm"}
                 onClick={handleCreateThread}
                 disabled={
                   !isSelectedImageSafe ||
                   threadData.text === "" ||
-                  threadData.text.length > 160 ||
+                  (!isAdmin && threadData.text.length > 160) ||
                   selectedFiles.length > 4 ||
                   isLoading ||
                   isReplying ||

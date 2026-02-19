@@ -15,6 +15,7 @@ import PostQuoteCard from "@/components/cards/post-quote-card";
 import PostImageCard from "@/components/cards/post-image-card";
 import { useDropzone, type Accept } from "react-dropzone";
 import Image from "next/image";
+import { api } from "@/trpc/react";
 
 interface CreatePostInputProps {
   isOpen: boolean;
@@ -37,6 +38,13 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
   const { selectedFiles, addFiles, removeFile, clearFiles } = useFileStore();
 
   const [inputValue, setInputValue] = React.useState("");
+
+  // Fetch current user's admin status
+  const { data: currentUser } = api.user.Info.useQuery(
+    { username: user?.user_metadata?.username ?? "" },
+    { enabled: !!user?.user_metadata?.username },
+  );
+  const isAdmin = currentUser?.userDetails.isAdmin ?? false;
 
   const handleResizeTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -148,7 +156,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
               value={inputValue}
               onChange={handleResizeTextareaChange}
               placeholder="Start a thread..."
-              maxLength={160}
+              maxLength={isAdmin ? undefined : 160}
             />
             {selectedFiles.length > 0 && (
               <div className="mt-2 grid grid-cols-2 gap-2">
