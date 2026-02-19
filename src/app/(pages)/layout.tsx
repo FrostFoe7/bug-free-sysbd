@@ -14,16 +14,16 @@ export default async function PagesLayout({ children }: PagesLayoutProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (user) {
+    const dbUser = await db.user.findUnique({
+      where: {
+        id: user.id,
+        email: user.email ?? "",
+      },
+    });
 
-  const dbUser = await db.user.findUnique({
-    where: {
-      id: user?.id,
-      email: user?.email ?? "",
-    },
-  });
-
-  if (!dbUser) redirect("/account?origin=/");
+    if (!dbUser) redirect("/account?origin=/");
+  }
 
   return (
     <>

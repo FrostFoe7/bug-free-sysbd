@@ -40,11 +40,10 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
   const [inputValue, setInputValue] = React.useState("");
 
   // Fetch current user's admin status
-  const { data: currentUser } = api.user.Info.useQuery(
-    { username: user?.user_metadata?.username ?? "" },
-    { enabled: !!user?.user_metadata?.username },
-  );
-  const isAdmin = currentUser?.userDetails.isAdmin ?? false;
+  const { data: currentUser } = api.user.currentUser.useQuery(undefined, {
+    enabled: !!user,
+  });
+  const isAdmin = currentUser?.isAdmin ?? false;
 
   const handleResizeTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,

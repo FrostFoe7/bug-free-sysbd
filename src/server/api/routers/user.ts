@@ -272,6 +272,31 @@ export const userRouter = createTRPCRouter({
       return reposts;
     }),
 
+  currentUser: privateProcedure.query(async ({ ctx }) => {
+    const user = await ctx.db.user.findUnique({
+      where: {
+        id: ctx.userId,
+      },
+      select: {
+        id: true,
+        image: true,
+        fullname: true,
+        username: true,
+        bio: true,
+        link: true,
+        privacy: true,
+        createdAt: true,
+        isAdmin: true,
+      },
+    });
+
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    return user;
+  }),
+
   allUsers: privateProcedure
     .input(
       z.object({

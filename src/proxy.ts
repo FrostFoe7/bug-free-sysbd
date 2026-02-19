@@ -68,8 +68,10 @@ export async function proxy(request: NextRequest) {
     "/opengraph-image.png",
     "/@",
   ];
+
+  const decodedPathname = decodeURIComponent(request.nextUrl.pathname);
   const isPublicRoute = publicRoutes.some((route) =>
-    request.nextUrl.pathname.startsWith(route),
+    decodedPathname.startsWith(route),
   );
 
   if (!isPublicRoute && !user) {
