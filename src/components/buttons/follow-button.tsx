@@ -34,7 +34,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 
   const trpcUtils = api.useUtils();
 
-  const { mutate: toggleFollow, isLoading } = api.user.toggleFollow.useMutation(
+  const { mutate: toggleFollow, isPending: isLoading } = api.user.toggleFollow.useMutation(
     {
       onMutate: () => {
         const previousFollowedByMe = followUpdate.current.isFollowedByMe;

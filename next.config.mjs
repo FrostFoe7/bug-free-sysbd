@@ -24,13 +24,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "uploadthing.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "utfs.io",
-        pathname: "**",
+        hostname: "gxchsxkgstdnctklxucv.supabase.co",
+        pathname: "/storage/v1/object/public/**",
       },
     ],
   },

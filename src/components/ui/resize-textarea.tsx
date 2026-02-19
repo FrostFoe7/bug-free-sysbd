@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const ResizeTextarea: React.FC<TextareaProps> = ({ className, ...props }) => {
-  function updateTextAreaSize(textArea?: HTMLTextAreaElement) {
+  function updateTextAreaSize(textArea?: HTMLTextAreaElement | null) {
     if (textArea == null) return;
     textArea.style.height = "0";
     textArea.style.height = `${textArea.scrollHeight}px`;
   }
 
-  const textAreaRef = React.useRef<HTMLTextAreaElement>();
+  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const inputRef = React.useCallback((textArea: HTMLTextAreaElement) => {
     updateTextAreaSize(textArea);
     textAreaRef.current = textArea;

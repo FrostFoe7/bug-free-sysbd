@@ -9,7 +9,7 @@ interface PagesLayoutProps {
 }
 
 export default async function PagesLayout({ children }: PagesLayoutProps) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

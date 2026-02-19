@@ -16,7 +16,7 @@ export default function ActivityPage() {
     api.notification.getNotification.useQuery();
 
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
+  if (isError || !data) return <Error />;
 
   const { notifications } = data;
   const reversedNotifications = [...notifications].reverse();

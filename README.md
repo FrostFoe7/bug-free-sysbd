@@ -15,19 +15,19 @@ This is an open source **threads-clone** build with **_`create-t3-app`_** and ev
 - **Framework:** [Next.js](https://nextjs.org)
 - **Language:** [Typescript](https://www.typescriptlang.org/docs/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com)
-- **User Management:** [Clerk](https://clerk.com)
+- **User Management:** [Supabase Auth](https://supabase.com/auth)
 - **ORM:** [Prisma ORM](https://www.prisma.io/)
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com)
-- **File Uploads:** [uploadthing](https://uploadthing.com)
+- **File Uploads:** [Supabase Storage](https://supabase.com/storage)
 - **Typesafe APIs:** [tRPC](https://trpc.io)
 - **Hosting:** [Vercel](https://vercel.com/)
 
 ## Key Features
 
-- Authentication with **Clerk**
-- File uploads with **uploadthing**
+- Authentication with **Supabase Auth**
+- File uploads with **Supabase Storage**
 - Advance **Prisma ORM** concepts
-- Database on **Neon**
+- Database on **Supabase (PostgreSQL)**
 - Validation with **Zod**
 - Text filteration with **bad-words**
 - Image filteration with **nsfw-filter**

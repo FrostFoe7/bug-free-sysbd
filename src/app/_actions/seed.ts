@@ -6,7 +6,7 @@ import { faker } from "@faker-js/faker";
 import { NotificationType } from "@prisma/client";
 
 export async function checkAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -36,7 +36,7 @@ export async function createFakeUsers() {
 
   for (let i = 1; i <= 100; i++) {
     const id = faker.string.nanoid(11);
-    const username = faker.internet.userName();
+    const username = faker.internet.username();
     const fullname = faker.person.fullName();
     const email = faker.internet.email();
     const image = faker.image.avatarGitHub();
@@ -110,7 +110,7 @@ export async function createFakeNotifications() {
 
   if (!isAdmin) return null;
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

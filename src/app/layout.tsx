@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "sysm",
     "social",
     "t3-stack",
-    "uploadthing",
+    "supabase",
     "shadcn ui",
   ],
   authors: [

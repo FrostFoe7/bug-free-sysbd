@@ -7,7 +7,7 @@ import {
 } from "@/server/api/trpc";
 import { getUserEmail } from "@/lib/utils";
 import { PostPrivacy, Prisma } from "@prisma/client";
-import Filter from "bad-words";
+import { Filter } from "bad-words";
 import {
   GET_USER,
   GET_COUNT,

@@ -7,19 +7,16 @@ import { Card } from "@/components/ui/card";
 import { usePathname, useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
-import { generateReactHelpers } from "@uploadthing/react/hooks";
 import useFileStore from "@/store/fileStore";
 import usePost from "@/store/post";
 import PostPrivacyMenu from "@/components/menus/post-privacy-menu";
 import CreatePostInput from "@/components/create-post-input";
 import Link from "next/link";
 import { Check } from "lucide-react";
-import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import { uploadFile } from "@/lib/supabase/storage";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import useDialog from "@/store/dialog";
 import CreateButton from "@/components/buttons/create-button";
-
-const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 const CreatePostCard: React.FC = ({}) => {
   const router = useRouter();
@@ -38,7 +35,7 @@ const CreatePostCard: React.FC = ({}) => {
 
   const { postPrivacy } = usePost();
 
-  const { startUpload } = useUploadThing("postImage");
+  const [isUploading, setIsUploading] = React.useState(false);
 
   const [threadData, setThreadData] = React.useState({
     privacy: postPrivacy,
@@ -54,7 +51,7 @@ const CreatePostCard: React.FC = ({}) => {
 
   const trpcUtils = api.useUtils();
 
-  const { isLoading, mutateAsync: createThread } =
+  const { isPending: isLoading, mutateAsync: createThread } =
     api.post.createPost.useMutation({
       onMutate: ({}) => {
         setThreadData({
@@ -72,7 +69,7 @@ const CreatePostCard: React.FC = ({}) => {
       retry: false,
     });
 
-  const { isLoading: isReplying, mutateAsync: replyToPost } =
+  const { isPending: isReplying, mutateAsync: replyToPost } =
     api.post.replyToPost.useMutation({
       onError: (err) => {
         toast.error("ReplyingError: Something went wrong!");
@@ -90,19 +87,31 @@ const CreatePostCard: React.FC = ({}) => {
     });
 
   async function handleMutation() {
-    const imgRes = await startUpload(selectedFile);
+    let imageUrl: string | undefined = undefined;
+
+    if (selectedFile && selectedFile.length > 0) {
+      setIsUploading(true);
+      try {
+        imageUrl = await uploadFile(selectedFile[0]!, "threads-images");
+      } catch (error) {
+        toast.error("Upload failed");
+        setIsUploading(false);
+        throw error;
+      }
+      setIsUploading(false);
+    }
 
     const promise = replyPostInfo
       ? replyToPost({
           text: JSON.stringify(threadData.text, null, 2),
           postId: replyPostInfo.id,
-          imageUrl: imgRes ? imgRes[0]?.url : undefined,
+          imageUrl: imageUrl,
           privacy: threadData.privacy,
           postAuthor: replyPostInfo.author.id,
         })
       : createThread({
           text: JSON.stringify(threadData.text, null, 2),
-          imageUrl: imgRes ? imgRes[0]?.url : undefined,
+          imageUrl: imageUrl,
           privacy: threadData.privacy,
           quoteId: quoteInfo?.id,
           postAuthor: quoteInfo?.author.id,
@@ -197,17 +206,17 @@ const CreatePostCard: React.FC = ({}) => {
                 !isSelectedImageSafe ||
                 threadData.text === "" ||
                 isLoading ||
-                isReplying
+                isReplying ||
+                isUploading
               }
               className="bg-foreground hover:bg-foreground rounded-full px-4 font-semibold text-white select-none dark:text-black"
             >
-              {isLoading ||
-                (isReplying && (
-                  <Icons.spinner
-                    className="mr-2 h-4 w-4 animate-spin"
-                    aria-hidden="true"
-                  />
-                ))}
+              {(isLoading || isReplying || isUploading) && (
+                <Icons.spinner
+                  className="mr-2 h-4 w-4 animate-spin"
+                  aria-hidden="true"
+                />
+              )}
               Post
               <span className="sr-only">Post</span>
             </Button>

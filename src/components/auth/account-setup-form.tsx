@@ -27,86 +27,23 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-type UserSetupProps = Pick<User, "bio" | "link" | "privacy" | "username">;
+import { uploadFile } from "@/lib/supabase/storage";
+
+type UserSetupProps = Pick<User, "bio" | "link" | "privacy" | "username"> & {
+  fullname: string;
+  image: string;
+};
 
 export default function AccountSetupForm({ username }: { username: string }) {
   const { user } = useSupabaseAuth();
   const router = useRouter();
 
   const [showPrivacyPage, setShowPrivacyPage] = React.useState(false);
-
-  const [userAccountData, setUserAccountData] = React.useState<UserSetupProps>({
-    bio: "",
-    link: "",
-    privacy: Privacy.PUBLIC,
-    username: username,
-  });
-
-  const handleFieldChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setUserAccountData({
-      ...userAccountData,
-      [name]: value,
-    });
-  };
-
-  const { mutate: accountSetup, isLoading } = api.auth.accountSetup.useMutation(
-    {
-      onSuccess: ({ success, username }) => {
-        if (success) {
-          router.push(origin ? `${origin}` : "/");
-        }
-        toast.success(`Welcome to Sysm ${username} !`);
-      },
-      onError: (err) => {
-        toast.error("AuthCallBack: Something went wrong!");
-        if (err.data?.code === "UNAUTHORIZED") {
-          router.push("/login");
-        }
-      },
-      retry: false,
-    },
+  const [selectedImage, setSelectedImage] = React.useState<File | null>(null);
+  const [imagePreview, setImagePreview] = React.useState<string | null>(
+    (user?.user_metadata?.avatar_url as string) ?? null,
   );
-
-  const FormSchema = z.object({
-    url: z
-      .string()
-      .url()
-      .refine((url) => {
-        try {
-          const parsedUrl = new URL(url);
-          return parsedUrl.protocol === "https:";
-        } catch {
-          return false;
-        }
-      }, "Must be a valid HTTPS url")
-      .or(z.literal("")),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      url: "",
-    },
-  });
-
-  function handleAccountSetup() {
-    accountSetup({
-      bio: JSON.stringify(userAccountData.bio!, null, 2),
-      link: userAccountData.link!,
-      privacy: userAccountData.privacy,
-    });
-  }
-
-  function handleSecurity(data: z.infer<typeof FormSchema>) {
-    setUserAccountData({
-      ...userAccountData,
-      link: data.url,
-    });
-    setShowPrivacyPage(true);
-  }
+  const [isUploading, setIsUploading] = React.useState(false);
 
   function getFullName(firstName: string, lastName: string) {
     if (
@@ -119,6 +56,120 @@ export default function AccountSetupForm({ username }: { username: string }) {
     }
 
     return `${firstName} ${lastName}`;
+  }
+
+  const [userAccountData, setUserAccountData] = React.useState<UserSetupProps>({
+    bio: "",
+    link: "",
+    privacy: Privacy.PUBLIC,
+    username: username,
+    fullname: getFullName(
+      (user?.user_metadata?.first_name as string) ?? "",
+      (user?.user_metadata?.last_name as string) ?? "",
+    ),
+    image: (user?.user_metadata?.avatar_url as string) ?? "",
+  });
+
+  const handleFieldChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setUserAccountData({
+      ...userAccountData,
+      [name]: value,
+    });
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const { mutate: accountSetup, isPending: isSettingUp } =
+    api.auth.accountSetup.useMutation({
+      onSuccess: ({ success, username }) => {
+        if (success) {
+          router.push("/");
+        }
+        toast.success(`Welcome to Sysm ${username} !`);
+      },
+      onError: (err) => {
+        toast.error("AuthCallBack: Something went wrong!");
+        if (err.data?.code === "UNAUTHORIZED") {
+          router.push("/login");
+        }
+      },
+      retry: false,
+    });
+
+  const isLoading = isSettingUp || isUploading;
+
+  const FormSchema = z.object({
+    url: z
+      .string()
+      .url()
+      .refine((url) => {
+        try {
+          const parsedUrl = new URL(url);
+          return parsedUrl.protocol === "https:";
+        } catch {
+          return false;
+        }
+      }, "Must be a valid URL")
+      .or(z.literal("")),
+    fullname: z.string().min(1, "Name is required").max(50),
+    username: z.string().min(3, "Username must be at least 3 characters").max(30),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      url: "",
+      fullname: userAccountData.fullname,
+      username: userAccountData.username,
+    },
+  });
+
+  async function handleAccountSetup() {
+    let finalImageUrl = userAccountData.image;
+
+    if (selectedImage) {
+      setIsUploading(true);
+      try {
+        finalImageUrl = await uploadFile(selectedImage, "threads-images");
+      } catch (error) {
+        toast.error("Image upload failed");
+        setIsUploading(false);
+        return;
+      }
+      setIsUploading(false);
+    }
+
+    accountSetup({
+      bio: userAccountData.bio!,
+      link: userAccountData.link!,
+      privacy: userAccountData.privacy,
+      fullname: userAccountData.fullname,
+      username: userAccountData.username,
+      image: finalImageUrl,
+    });
+  }
+
+  function handleSecurity(data: z.infer<typeof FormSchema>) {
+    setUserAccountData({
+      ...userAccountData,
+      link: data.url,
+      fullname: data.fullname,
+      username: data.username,
+    });
+    setShowPrivacyPage(true);
   }
 
   return (
@@ -141,29 +192,70 @@ export default function AccountSetupForm({ username }: { username: string }) {
               <Card className="my-4 w-full rounded-2xl bg-transparent p-6 px-8 sm:mt-10">
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center justify-between">
-                    <div className="w-full">
-                      <Label htmlFor="username">Name</Label>
-                      <div className="my-1 flex h-7 w-full items-center gap-2">
-                        <Lock className="h-4 w-4 text-[#4D4D4D]" />
-                        <div className="text-accent-foreground w-full grow overflow-hidden text-[15px] tracking-wide wrap-break-word outline-hidden select-none">
-                          {`${getFullName((user?.user_metadata?.first_name as string) ?? "", (user?.user_metadata?.last_name as string) ?? "")} ${"(" + userAccountData?.username + ")"}`}
-                        </div>
-                      </div>
-                    </div>
-                    <Avatar className="outline-border h-12 w-12 rounded-full outline-1 outline-solid">
-                      <AvatarImage
-                        src={
-                          (user?.user_metadata?.avatar_url as string) ??
-                          user?.email ??
-                          ""
-                        }
-                        alt={(user?.user_metadata?.username as string) ?? ""}
-                        className="object-cover"
+                    <div className="w-full space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="fullname"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <div className="my-1 flex h-7 items-center gap-2">
+                                <Plus className="h-4 w-4 text-[#4D4D4D]" />
+                                <Input
+                                  {...field}
+                                  className="text-accent-foreground min-h-min border-0 bg-transparent p-0 text-[15px] ring-0 outline-hidden placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
+                                  placeholder="Your name"
+                                />
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        )}
                       />
-                      <AvatarFallback>
-                        <User2 className="h-5 w-5" />
-                      </AvatarFallback>
-                    </Avatar>
+                      <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                              <div className="my-1 flex h-7 items-center gap-2">
+                                <Plus className="h-4 w-4 text-[#4D4D4D]" />
+                                <Input
+                                  {...field}
+                                  className="text-accent-foreground min-h-min border-0 bg-transparent p-0 text-[15px] ring-0 outline-hidden placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
+                                  placeholder="username"
+                                />
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="relative">
+                      <Avatar className="outline-border h-16 w-16 rounded-full outline-1 outline-solid">
+                        <AvatarImage
+                          src={imagePreview ?? ""}
+                          className="object-cover"
+                        />
+                        <AvatarFallback>
+                          <User2 className="h-8 w-8" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <label
+                        htmlFor="image-upload"
+                        className="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-foreground text-background hover:opacity-90 shadow-sm border border-border"
+                      >
+                        <Plus className="h-4 w-4" />
+                        <input
+                          id="image-upload"
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                        />
+                      </label>
+                    </div>
                   </div>
                   <Label htmlFor="bio">Bio</Label>
                   <div className="flex gap-2">
@@ -180,8 +272,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
                   <FormField
                     control={form.control}
                     name="url"
-                    rules={{ required: false }}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                       <FormItem>
                         <FormLabel>Link</FormLabel>
                         <FormControl>
@@ -196,6 +287,11 @@ export default function AccountSetupForm({ username }: { username: string }) {
                             />
                           </div>
                         </FormControl>
+                        {fieldState.error && (
+                          <p className="text-xs text-red-500">
+                            {fieldState.error.message}
+                          </p>
+                        )}
                       </FormItem>
                     )}
                   />

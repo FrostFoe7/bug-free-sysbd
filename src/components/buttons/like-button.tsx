@@ -24,7 +24,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
     likeCount: count.likeCount,
   });
 
-  const { mutate: toggleLike, isLoading } = api.like.toggleLike.useMutation({
+  const { mutate: toggleLike, isPending: isLoading } = api.like.toggleLike.useMutation({
     onMutate: () => {
       const previousLikedByMe = likeUpdate.current.isLikedByMe;
       const previousLikeCount = likeUpdate.current.likeCount;

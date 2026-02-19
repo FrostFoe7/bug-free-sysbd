@@ -32,7 +32,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     isRepostedByMe,
   });
 
-  const { mutate: toggleRepost, isLoading } = api.post.toggleRepost.useMutation(
+  const { mutate: toggleRepost, isPending: isLoading } = api.post.toggleRepost.useMutation(
     {
       onMutate: () => {
         const previousRepostByMe = repostUpdate.current.isRepostedByMe;

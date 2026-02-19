@@ -13,17 +13,14 @@ export const api = createTRPCReact<AppRouter>({
 
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
-  headers: Headers;
+  headers: Promise<Headers>;
 }) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            cacheTime: Infinity,
             staleTime: 10 * 60 * 1000,
-            refetchIntervalInBackground: true,
-            keepPreviousData: true,
           },
         },
       }),
@@ -31,12 +28,13 @@ export function TRPCReactProvider(props: {
 
   const [trpcClient] = useState(() =>
     api.createClient({
-      transformer,
       links: [
         httpBatchLink({
           url: getUrl(),
-          headers() {
-            const heads = new Map(props.headers);
+          transformer,
+          async headers() {
+            const resolvedHeaders = await props.headers;
+            const heads = new Map(resolvedHeaders);
             heads.set("x-trpc-source", "react");
             return Object.fromEntries(heads);
           },
