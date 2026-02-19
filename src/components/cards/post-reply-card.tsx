@@ -15,7 +15,8 @@ import LikeButton from "@/components/buttons/like-button";
 import PostActivityCard from "@/components/cards/post-activity-card";
 import { cn, formatTimeAgo } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import PostImageCard from "@/components/cards/post-image-card";
 import PostQuoteCard from "@/components/cards/post-quote-card";
 import ReplyButton from "@/components/buttons/reply-button";
@@ -120,6 +121,9 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
               </button>
             </DialogTrigger>
             <DialogContent className="w-full max-w-[360px] rounded-2xl border-none p-0">
+              <DialogTitle asChild>
+                <VisuallyHidden>{author.username}'s profile</VisuallyHidden>
+              </DialogTitle>
               <ProfileInfoCard {...author} />
             </DialogContent>
           </Dialog>

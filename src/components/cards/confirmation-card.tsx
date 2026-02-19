@@ -7,6 +7,7 @@ import {
   AlertDialogContent,
   AlertDialogDelete,
   AlertDialogTrigger,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
@@ -67,9 +68,11 @@ const ConfirmationCard: React.FC<ConfirmationCardProps> = ({ id }) => {
         Delete
       </AlertDialogTrigger>
       <AlertDialogContent className="border-border bg-background w-full max-w-[280px] gap-0 overflow-hidden rounded-2xl p-0 shadow-xl dark:bg-[#181818]">
-        <div className="border-border flex w-full items-center justify-center border-b py-5 text-[16px] font-bold">
-          Are you sure?
-        </div>
+        <AlertDialogTitle asChild>
+          <div className="border-border flex w-full items-center justify-center border-b py-5 text-[16px] font-bold">
+            Are you sure?
+          </div>
+        </AlertDialogTitle>
         <div className="flex items-center justify-center">
           <AlertDialogClose className="border-border active:bg-primary-foreground mt-0 flex w-full cursor-pointer items-center justify-center rounded-none border-r px-4 py-4 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent">
             Cancel

@@ -14,7 +14,7 @@ import CreatePostInput from "@/components/create-post-input";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { uploadFile } from "@/lib/supabase/storage";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import useDialog from "@/store/dialog";
 import CreateButton from "@/components/buttons/create-button";
 
@@ -184,9 +184,11 @@ const CreatePostCard: React.FC = ({}) => {
         <CreateButton />
       </DialogTrigger>
       <DialogContent className="w-full max-w-lg border-none bg-transparent shadow-none outline-hidden select-none sm:max-w-[668px]">
-        <h1 className="mb-2 w-full text-center font-bold text-white">
-          {replyPostInfo ? <>Reply</> : <>New thread</>}
-        </h1>
+        <DialogTitle asChild>
+          <h1 className="mb-2 w-full text-center font-bold text-white">
+            {replyPostInfo ? <>Reply</> : <>New thread</>}
+          </h1>
+        </DialogTitle>
         <Card className="bg-background rounded-2xl border-none shadow-2xl ring-1 ring-[#393939] ring-offset-0 dark:bg-[#181818]">
           <div className="no-scrollbar max-h-[70vh] overflow-y-auto p-6">
             {replyPostInfo && (
