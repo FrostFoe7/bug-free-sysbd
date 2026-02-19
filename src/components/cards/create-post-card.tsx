@@ -190,7 +190,7 @@ const CreatePostCard: React.FC = ({}) => {
           </h1>
         </DialogTitle>
         <Card className="bg-background rounded-2xl border-none shadow-2xl ring-1 ring-[#393939] ring-offset-0 dark:bg-[#181818]">
-          <div className="no-scrollbar max-h-[70vh] overflow-y-auto p-6">
+          <div className="no-scrollbar min-h-[30vh] max-h-[70vh] overflow-y-auto p-6">
             {replyPostInfo && (
               <CreatePostInput
                 isOpen={openDialog}
