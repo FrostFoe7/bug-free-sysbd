@@ -18,6 +18,7 @@ import type { FileWithPreview } from "@/store/fileStore";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import useDialog from "@/store/dialog";
 import CreateButton from "@/components/buttons/create-button";
+import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar";
 
 const CreatePostCard: React.FC = ({}) => {
   const router = useRouter();
@@ -209,27 +210,39 @@ const CreatePostCard: React.FC = ({}) => {
           </div>
           <div className="flex w-full items-center justify-between p-6">
             <PostPrivacyMenu />
-            <Button
-              size={"sm"}
-              onClick={handleCreateThread}
-              disabled={
-                !isSelectedImageSafe ||
-                threadData.text === "" ||
-                isLoading ||
-                isReplying ||
-                isUploading
-              }
-              className="bg-foreground hover:bg-foreground rounded-full px-4 font-semibold text-white select-none dark:text-black"
-            >
-              {(isLoading || isReplying || isUploading) && (
-                <Icons.spinner
-                  className="mr-2 h-4 w-4 animate-spin"
-                  aria-hidden="true"
-                />
-              )}
-              Post
-              <span className="sr-only">Post</span>
-            </Button>
+            <div className="flex items-center gap-2">
+              <AnimatedCircularProgressBar
+                className="size-8 text-[10px]"
+                max={160}
+                min={0}
+                value={threadData.text.length}
+                gaugePrimaryColor={threadData.text.length > 160 ? "#ef4444" : "#000000"}
+                gaugeSecondaryColor="#e5e5e5"
+              />
+              <Button
+                size={"sm"}
+                onClick={handleCreateThread}
+                disabled={
+                  !isSelectedImageSafe ||
+                  threadData.text === "" ||
+                  threadData.text.length > 160 ||
+                  selectedFiles.length > 4 ||
+                  isLoading ||
+                  isReplying ||
+                  isUploading
+                }
+                className="bg-foreground hover:bg-foreground rounded-full px-4 font-semibold text-white select-none dark:text-black"
+              >
+                {(isLoading || isReplying || isUploading) && (
+                  <Icons.spinner
+                    className="mr-2 h-4 w-4 animate-spin"
+                    aria-hidden="true"
+                  />
+                )}
+                Post
+                <span className="sr-only">Post</span>
+              </Button>
+            </div>
           </div>
         </Card>
       </DialogContent>

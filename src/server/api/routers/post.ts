@@ -23,6 +23,8 @@ export const postRouter = createTRPCRouter({
       z.object({
         text: z.string().min(3, {
           message: "Text must be at least 3 character",
+        }).max(160, {
+          message: "Text must not exceed 160 characters",
         }),
         imageUrl: z.string().optional(),
         imageUrls: z.array(z.string()).optional(),
@@ -265,6 +267,8 @@ export const postRouter = createTRPCRouter({
         postId: z.string(),
         text: z.string().min(3, {
           message: "Text must be at least 3 character",
+        }).max(160, {
+          message: "Text must not exceed 160 characters",
         }),
         imageUrl: z.string().optional(),
         imageUrls: z.array(z.string()).optional(),
