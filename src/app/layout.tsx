@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 
-import { Inter, Hind_Siliguri } from "next/font/google";
+import { Poppins, Hind_Siliguri } from "next/font/google";
 import { headers } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -12,8 +12,9 @@ import Loading from "@/app/(pages)/loading";
 import { siteConfig } from "@/config/site";
 import type { Metadata, Viewport } from "next";
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-sans",
 });
 
@@ -85,7 +86,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`no-scrollbar font-sans ${inter.variable} ${hindSiliguri.variable}`}
+        className={`no-scrollbar font-sans ${poppins.variable} ${hindSiliguri.variable}`}
       >
         <SupabaseProvider>
           <TRPCReactProvider headers={headers()}>
