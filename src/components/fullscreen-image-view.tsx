@@ -17,13 +17,14 @@ const FullscreenImageView: React.FC = ({}) => {
         >
           <X className="h-8 w-8" />
         </span>
-        <div className="fixed top-[50%] left-[50%] z-999 grid max-h-screen w-full max-w-[90vw] translate-x-[-50%] translate-y-[-50%]">
+        <div className="fixed inset-0 z-999 flex items-center justify-center p-4">
           <Image
             width={630}
             height={630}
             src={imageUrl}
             alt="Image with full screen view"
-            className="mx-auto h-full w-max object-cover"
+            className="h-full w-full max-w-full max-h-full object-contain"
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
       </div>
