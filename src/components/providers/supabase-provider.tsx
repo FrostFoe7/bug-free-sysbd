@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createBrowserClient, type CookieOptions } from "@supabase/ssr";
 import type { User } from "@supabase/supabase-js";
 
@@ -16,47 +16,44 @@ const SupabaseContext = createContext<SupabaseContextType | undefined>(
   undefined,
 );
 
+// Create supabase client outside to avoid immutability rule issues inside components
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    cookies: {
+      get(name: string) {
+        try {
+          return (
+            document.cookie.match(
+              new RegExp(`(^|;\\s*)${name}=([^;]*)`),
+            )?.[2] ?? ""
+          );
+        } catch {
+          return "";
+        }
+      },
+      set(name: string, value: string, options: CookieOptions) {
+        try {
+          document.cookie = `${name}=${value}; path=/; ${options.secure ? "secure;" : ""} ${options.sameSite ? `samesite=${options.sameSite};` : ""}`;
+        } catch {
+          // Ignore errors in cookie setting
+        }
+      },
+      remove(name: string, options: CookieOptions) {
+        try {
+          document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; ${options.secure ? "secure;" : ""} ${options.sameSite ? `samesite=${options.sameSite};` : ""}`;
+        } catch {
+          // Ignore errors in cookie removal
+        }
+      },
+    },
+  },
+);
+
 export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const supabase = useMemo(() => {
-    return createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            try {
-              return (
-                document.cookie.match(
-                  new RegExp(`(^|;\\s*)(${name})=([^;]*)`),
-                )?.[3] ?? ""
-              );
-            } catch {
-              return "";
-            }
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            try {
-              // eslint-disable-next-line react-hooks/immutability
-              document.cookie = `${name}=${value}; path=/; ${options.secure ? "secure;" : ""} ${options.sameSite ? `samesite=${options.sameSite};` : ""}`;
-            } catch {
-              // Ignore errors in cookie setting
-            }
-          },
-          remove(name: string, options: CookieOptions) {
-            try {
-              // eslint-disable-next-line react-hooks/immutability
-              document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; ${options.secure ? "secure;" : ""} ${options.sameSite ? `samesite=${options.sameSite};` : ""}`;
-            } catch {
-              // Ignore errors in cookie removal
-            }
-          },
-        },
-      },
-    );
-  }, []);
 
   useEffect(() => {
     // Get initial session
@@ -74,7 +71,7 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase]);
+  }, []);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({

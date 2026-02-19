@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -183,7 +183,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   /* Bengali text support */
   .font-bengali {
     font-family: var(--font-bengali), system-ui, sans-serif;

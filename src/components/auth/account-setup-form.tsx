@@ -125,7 +125,10 @@ export default function AccountSetupForm({ username }: { username: string }) {
       }, "Must be a valid URL")
       .or(z.literal("")),
     fullname: z.string().min(1, "Name is required").max(50),
-    username: z.string().min(3, "Username must be at least 3 characters").max(30),
+    username: z
+      .string()
+      .min(3, "Username must be at least 3 characters")
+      .max(30),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -224,7 +227,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
                                 <Input
                                   {...field}
                                   readOnly
-                                  className="text-accent-foreground min-h-min border-0 bg-transparent p-0 text-[15px] ring-0 outline-hidden select-none placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0 opacity-70 cursor-not-allowed"
+                                  className="text-accent-foreground min-h-min cursor-not-allowed border-0 bg-transparent p-0 text-[15px] opacity-70 ring-0 outline-hidden select-none placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
                                   placeholder="username"
                                 />
                               </div>
@@ -245,7 +248,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
                       </Avatar>
                       <label
                         htmlFor="image-upload"
-                        className="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-foreground text-background hover:opacity-90 shadow-sm border border-border"
+                        className="bg-foreground text-background border-border absolute -right-1 -bottom-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border shadow-sm hover:opacity-90"
                       >
                         <Plus className="h-4 w-4" />
                         <input

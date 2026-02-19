@@ -8,18 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import usePost from "@/store/post";
 
+const privacyText = {
+  ["ANYONE"]: "Anyone can reply",
+  ["FOLLOWED"]: "Profiles you follow can reply",
+  ["MENTIONED"]: "Profiles you mention can reply",
+};
+
 const PostPrivacyMenu: React.FC = ({}) => {
   const { postPrivacy, setPostPrivacy } = usePost();
 
-  const privacyText = {
-    ["ANYONE"]: "Anyone can reply",
-    ["FOLLOWED"]: "Profiles you follow can reply",
-    ["MENTIONED"]: "Profiles you mention can reply",
-  };
-
   const privacyDisplayText = React.useMemo(() => {
     return privacyText[postPrivacy];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postPrivacy]);
 
   return (

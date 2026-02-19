@@ -170,8 +170,13 @@ const CreatePostCard: React.FC = ({}) => {
       setReplyPostInfo(null);
       setQuoteInfo(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openDialog]);
+  }, [
+    openDialog,
+    postPrivacy,
+    setSelectedFile,
+    setReplyPostInfo,
+    setQuoteInfo,
+  ]);
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>

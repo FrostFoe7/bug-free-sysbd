@@ -83,7 +83,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`no-scrollbar font-sans ${inter.variable} ${hindSiliguri.variable}`}>
+      <body
+        suppressHydrationWarning
+        className={`no-scrollbar font-sans ${inter.variable} ${hindSiliguri.variable}`}
+      >
         <SupabaseProvider>
           <TRPCReactProvider headers={headers()}>
             <ThemeProvider

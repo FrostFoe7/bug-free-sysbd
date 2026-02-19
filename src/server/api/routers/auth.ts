@@ -24,7 +24,8 @@ export const authRouter = createTRPCRouter({
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       const email = getUserEmail(user);
-      const defaultUsername = (await generateUsername(user)) ?? emailToUsername(user);
+      const defaultUsername =
+        (await generateUsername(user)) ?? emailToUsername(user);
       const username = input.username ?? defaultUsername;
 
       function getFullName(firstName: string, lastName: string) {
@@ -59,7 +60,10 @@ export const authRouter = createTRPCRouter({
               id: userId,
               username,
               fullname,
-              image: input.image ?? (user.user_metadata?.avatar_url as string) ?? null,
+              image:
+                input.image ??
+                (user.user_metadata?.avatar_url as string) ??
+                null,
               privacy: input.privacy,
               bio: input.bio,
               link: input.link,
