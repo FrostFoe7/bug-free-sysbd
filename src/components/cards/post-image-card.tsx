@@ -3,35 +3,53 @@
 import React from "react";
 import { useImageStore } from "@/store/image";
 import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface PostImageCardProps {
-  image: string | undefined;
+  images: string[] | undefined;
 }
 
-const PostImageCard: React.FC<PostImageCardProps> = ({ image }) => {
+const PostImageCard: React.FC<PostImageCardProps> = ({ images }) => {
   const { setImageUrl } = useImageStore();
 
-  // TODO: need to fix this
-  // const buffer = await fetch(image).then(async (res) => {
-  //     return Buffer.from(await res.arrayBuffer())
-  // })
-
-  // const { base64 } = await getPlaiceholder(buffer)
+  if (!images || images.length === 0) return null;
 
   return (
-    <div className="border-border relative mt-2.5 w-full cursor-pointer overflow-hidden rounded-[12px] border">
-      <Image
-        loading="lazy"
-        src={image ?? ""}
-        width={630}
-        height={630}
-        alt="Will add alt-text soon!"
-        onClick={() => {
-          setImageUrl(image);
-        }}
-        className="w-full rounded-[12px] object-cover"
-      />
-    </div>
+    <Carousel className="mt-2.5 w-full">
+      <CarouselContent>
+        {images.map((image, index) => (
+          <CarouselItem key={index}>
+            <div
+              className="border-border relative cursor-pointer overflow-hidden rounded-[12px] border"
+              onClick={() => {
+                setImageUrl(image);
+              }}
+            >
+              <Image
+                loading="lazy"
+                src={image ?? ""}
+                width={630}
+                height={630}
+                alt="Will add alt-text soon!"
+                className="aspect-square w-full rounded-[12px] object-cover"
+              />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      {images.length > 1 && (
+        <>
+          <CarouselPrevious className="left-2" />
+          <CarouselNext className="right-2" />
+        </>
+      )}
+    </Carousel>
   );
 };
 

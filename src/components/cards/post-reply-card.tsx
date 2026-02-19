@@ -152,7 +152,7 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
               />
 
               {images && images.length > 0 && (
-                <PostImageCard image={images[0]} />
+                <PostImageCard images={images} />
               )}
 
               {quoteId && (

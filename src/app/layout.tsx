@@ -11,6 +11,7 @@ import FullscreenImageView from "@/components/fullscreen-image-view";
 import Loading from "@/app/(pages)/loading";
 import { siteConfig } from "@/config/site";
 import type { Metadata, Viewport } from "next";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -85,8 +86,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`no-scrollbar font-sans ${inter.variable} ${hindSiliguri.variable}`}
+        className={`no-scrollbar font-sans cursor-none ${inter.variable} ${hindSiliguri.variable}`}
       >
+        <SmoothCursor />
         <SupabaseProvider>
           <TRPCReactProvider headers={headers()}>
             <ThemeProvider

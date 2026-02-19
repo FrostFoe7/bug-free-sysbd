@@ -14,6 +14,7 @@ import CreatePostInput from "@/components/create-post-input";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { uploadFile } from "@/lib/supabase/storage";
+import type { FileWithPreview } from "@/store/fileStore";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import useDialog from "@/store/dialog";
 import CreateButton from "@/components/buttons/create-button";
@@ -31,7 +32,7 @@ const CreatePostCard: React.FC = ({}) => {
     setQuoteInfo,
   } = useDialog();
 
-  const { selectedFile, setSelectedFile, isSelectedImageSafe } = useFileStore();
+  const { selectedFiles, setSelectedFiles, clearFiles, isSelectedImageSafe } = useFileStore();
 
   const { postPrivacy } = usePost();
 
@@ -87,12 +88,14 @@ const CreatePostCard: React.FC = ({}) => {
     });
 
   async function handleMutation() {
-    let imageUrl: string | undefined = undefined;
+    let imageUrls: string[] = [];
 
-    if (selectedFile && selectedFile.length > 0) {
+    if (selectedFiles && selectedFiles.length > 0) {
       setIsUploading(true);
       try {
-        imageUrl = await uploadFile(selectedFile[0]!, "threads-images");
+        imageUrls = await Promise.all(
+          selectedFiles.map((file) => uploadFile(file, "threads-images")),
+        );
       } catch (error) {
         toast.error("Upload failed");
         setIsUploading(false);
@@ -105,13 +108,13 @@ const CreatePostCard: React.FC = ({}) => {
       ? replyToPost({
           text: JSON.stringify(threadData.text, null, 2),
           postId: replyPostInfo.id,
-          imageUrl: imageUrl,
+          imageUrls: imageUrls,
           privacy: threadData.privacy,
           postAuthor: replyPostInfo.author.id,
         })
       : createThread({
           text: JSON.stringify(threadData.text, null, 2),
-          imageUrl: imageUrl,
+          imageUrls: imageUrls,
           privacy: threadData.privacy,
           quoteId: quoteInfo?.id,
           postAuthor: quoteInfo?.author.id,
@@ -166,14 +169,14 @@ const CreatePostCard: React.FC = ({}) => {
         privacy: postPrivacy,
         text: "",
       });
-      setSelectedFile([]);
+      clearFiles();
       setReplyPostInfo(null);
       setQuoteInfo(null);
     }
   }, [
     openDialog,
     postPrivacy,
-    setSelectedFile,
+    clearFiles,
     setReplyPostInfo,
     setQuoteInfo,
   ]);

@@ -25,6 +25,7 @@ export const postRouter = createTRPCRouter({
           message: "Text must be at least 3 character",
         }),
         imageUrl: z.string().optional(),
+        imageUrls: z.array(z.string()).optional(),
         privacy: z.nativeEnum(PostPrivacy).default("ANYONE"),
         quoteId: z.string().optional(),
         postAuthor: z.string().optional(),
@@ -49,12 +50,14 @@ export const postRouter = createTRPCRouter({
       const filter = new Filter();
       const filteredText = filter.clean(input.text);
 
+      const imageUrls = input.imageUrls ?? (input.imageUrl ? [input.imageUrl] : []);
+
       const transactionResult = await ctx.db.$transaction(async (prisma) => {
         const newpost = await ctx.db.post.create({
           data: {
             text: filteredText,
             authorId: userId,
-            images: input.imageUrl ? [input.imageUrl] : [],
+            images: imageUrls,
             privacy: input.privacy,
             quoteId: input.quoteId,
           },
@@ -264,6 +267,7 @@ export const postRouter = createTRPCRouter({
           message: "Text must be at least 3 character",
         }),
         imageUrl: z.string().optional(),
+        imageUrls: z.array(z.string()).optional(),
         privacy: z.nativeEnum(PostPrivacy),
       }),
     )
@@ -286,11 +290,13 @@ export const postRouter = createTRPCRouter({
       const filter = new Filter();
       const filteredText = filter.clean(input.text);
 
+      const imageUrls = input.imageUrls ?? (input.imageUrl ? [input.imageUrl] : []);
+
       const transactionResult = await ctx.db.$transaction(async (prisma) => {
         const repliedPost = await prisma.post.create({
           data: {
             text: filteredText,
-            images: input.imageUrl ? [input.imageUrl] : [],
+            images: imageUrls,
             privacy: input.privacy,
             author: {
               connect: {

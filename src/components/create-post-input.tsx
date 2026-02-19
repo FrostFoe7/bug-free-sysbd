@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import useFileStore from "@/store/fileStore";
+import useFileStore, { type FileWithPreview } from "@/store/fileStore";
 import { X } from "lucide-react";
 import Username from "@/components/user/user-username";
 import { ResizeTextarea } from "@/components/ui/resize-textarea";
@@ -34,7 +34,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
   quoteInfo,
 }) => {
   const { user } = useSupabaseAuth();
-  const { setSelectedFile } = useFileStore();
+  const { selectedFiles, addFiles, removeFile, clearFiles } = useFileStore();
 
   const [inputValue, setInputValue] = React.useState("");
 
@@ -46,25 +46,20 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
     onTextareaChange(newValue);
   };
 
-  const [previewURL, setPreviewURL] = React.useState<string | undefined>(
-    undefined,
-  );
-
   const onDrop = React.useCallback(
     (acceptedFiles: File[]) => {
-      const acceptedFile = acceptedFiles[0];
+      const remainingSlots = 4 - selectedFiles.length;
+      const filesToAccept = acceptedFiles.slice(0, remainingSlots);
 
-      if (!acceptedFile) {
-        alert("Selected image is too large!");
-        return;
-      }
+      const filesWithPreview = filesToAccept.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      ) as FileWithPreview[];
 
-      const previewURL = URL.createObjectURL(acceptedFile);
-      setPreviewURL(previewURL);
-
-      setSelectedFile(acceptedFiles);
+      addFiles(filesWithPreview);
     },
-    [setSelectedFile],
+    [addFiles, selectedFiles.length],
   );
 
   const accept: Accept = {
@@ -143,7 +138,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
               />
             </div>
             {replyThreadInfo?.images && replyThreadInfo?.images?.length > 0 && (
-              <PostImageCard image={replyThreadInfo.images[0]} />
+              <PostImageCard images={replyThreadInfo.images} />
             )}
           </>
         ) : (
@@ -155,33 +150,30 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
               placeholder="Start a thread..."
               maxLength={200}
             />
-            {previewURL && (
-              <div className="border-border relative w-fit overflow-hidden rounded-[12px] border">
-                <Image
-                  src={previewURL}
-                  alt="Preview"
-                  width={1000}
-                  height={1000}
-                  unoptimized
-                  className="max-h-[520px] max-w-full rounded-[12px] object-contain"
-                />
-                {/* TODO: Do this check on server side !*/}
-                {/* {!isSafeImage &&
-                                    <div className='absolute top-0 left-0 w-full h-full backdrop-blur-xl flex justify-center items-center'>
-                                        <EyeOff className='h-8 w-8 text-[#3b3b3b]' />
-                                    </div>
-                                } */}
-                <Button
-                  onClick={() => {
-                    // setIsSafeImage(true)
-                    setSelectedFile([]);
-                    setPreviewURL("");
-                  }}
-                  variant={"ghost"}
-                  className="bg-background absolute top-2 right-2 z-50 h-6 w-6 transform cursor-pointer rounded-full p-1 transition-transform active:scale-75"
-                >
-                  <X />
-                </Button>
+            {selectedFiles.length > 0 && (
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                {selectedFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="border-border relative overflow-hidden rounded-[12px] border"
+                  >
+                    <Image
+                      src={file.preview}
+                      alt="Preview"
+                      width={300}
+                      height={300}
+                      unoptimized
+                      className="h-full w-full rounded-[12px] object-cover"
+                    />
+                    <Button
+                      onClick={() => removeFile(index)}
+                      variant={"ghost"}
+                      className="bg-background absolute top-2 right-2 z-50 h-6 w-6 transform cursor-pointer rounded-full p-1 transition-transform active:scale-75"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </>
@@ -196,6 +188,11 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
             <div className="flex items-center gap-1 text-[15px] text-[#777777] select-none">
               <input {...getInputProps()} />
               <Icons.image className="h-5 w-5 transform cursor-pointer transition-transform select-none active:scale-75" />
+              <span className="text-xs">
+                {selectedFiles.length === 0
+                  ? "Add images"
+                  : `${4 - selectedFiles.length} image${4 - selectedFiles.length > 1 ? "s" : ""} left`}
+              </span>
             </div>
           </div>
         )}

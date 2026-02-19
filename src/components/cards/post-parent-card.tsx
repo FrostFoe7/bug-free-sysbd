@@ -140,7 +140,7 @@ const PostParentCard: React.FC<PostCardProps> = ({
               </Link>
 
               {images && images.length > 0 && (
-                <PostImageCard image={images[0]} />
+                <PostImageCard images={images} />
               )}
 
               {quoteId && (
