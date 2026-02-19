@@ -144,7 +144,7 @@ export default function AccountSetupForm({ username }: { username: string }) {
       setIsUploading(true);
       try {
         finalImageUrl = await uploadFile(selectedImage, "threads-images");
-      } catch (error) {
+      } catch {
         toast.error("Image upload failed");
         setIsUploading(false);
         return;

@@ -2,7 +2,6 @@
 
 import useWindow from "@/hooks/use-window";
 import React from "react";
-import { Icons } from "@/components/icons";
 import Image from "next/image";
 
 export default function ThreadsBanner() {
@@ -11,7 +10,13 @@ export default function ThreadsBanner() {
     <header className="mx-auto max-w-(--breakpoint-md) md:max-w-(--breakpoint-2xl) lg:max-w-[1800px]">
       {isMobile ? (
         <div className="flex items-center justify-center">
-          <img src="/logo.png" alt="Logo" className="mt-16 mb-6 h-12 w-12 sm:h-16 sm:w-16 object-contain" />
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={64}
+            height={64}
+            className="mt-16 mb-6 object-contain sm:h-16 sm:w-16"
+          />
         </div>
       ) : (
         <nav className="pointer-events-none z-50 flex w-full items-center justify-between select-none">

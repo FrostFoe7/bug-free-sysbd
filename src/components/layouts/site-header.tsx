@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Icons } from "@/components/icons";
 import Navigation from "@/components/navigations";
 import useWindow from "@/hooks/use-window";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import NavigationMenu from "@/components/menus/navigation-menu";
+import Image from "next/image";
 
 export default function SiteHeader() {
   const { isMobile } = useWindow();
@@ -14,11 +14,11 @@ export default function SiteHeader() {
 
   React.useEffect(() => {
     const changeBgColor = () => {
-      window.scrollY > 0 ? setIsScrolled(true) : setIsScrolled(false);
+      setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", changeBgColor);
     return () => window.removeEventListener("scroll", changeBgColor);
-  }, [isScrolled]);
+  }, []);
 
   return (
     <header
@@ -36,7 +36,13 @@ export default function SiteHeader() {
             href={"/"}
             className="z-50 flex w-full transform cursor-pointer items-center justify-center gap-2.5 py-4 text-2xl font-semibold tracking-wide transition-all duration-150 ease-out hover:scale-105 active:scale-95 sm:w-fit"
           >
-            <img src="/logo.png" alt="Logo" className="h-[40px] w-[40px] object-contain" />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+            />
           </Link>
           <div className="hidden w-full max-w-[480px] items-center justify-between sm:flex">
             <Navigation />

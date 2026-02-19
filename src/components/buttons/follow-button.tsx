@@ -20,7 +20,6 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   className,
 }) => {
   const path = usePathname();
-
   const { user: loggedUser } = useSupabaseAuth();
 
   const isSameUser = author.id === loggedUser?.id;
@@ -28,21 +27,23 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     (user) => user.id === loggedUser?.id,
   );
 
-  const followUpdate = React.useRef({
-    isFollowedByMe,
-  });
+  const [optimisticFollowed, setOptimisticFollowed] =
+    React.useState(isFollowedByMe);
+
+  // Sync state with props if they change
+  React.useEffect(() => {
+    setOptimisticFollowed(isFollowedByMe);
+  }, [isFollowedByMe]);
 
   const trpcUtils = api.useUtils();
 
-  const { mutate: toggleFollow, isPending: isLoading } = api.user.toggleFollow.useMutation(
-    {
+  const { mutate: toggleFollow, isPending: isLoading } =
+    api.user.toggleFollow.useMutation({
       onMutate: () => {
-        const previousFollowedByMe = followUpdate.current.isFollowedByMe;
+        const previousFollowedByMe = optimisticFollowed;
+        setOptimisticFollowed(!previousFollowedByMe);
 
-        followUpdate.current.isFollowedByMe =
-          !followUpdate.current.isFollowedByMe;
-
-        if (followUpdate.current.isFollowedByMe === true) {
+        if (!previousFollowedByMe) {
           toast("Followed");
         } else {
           toast("Unfollowed");
@@ -51,8 +52,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         return { previousFollowedByMe };
       },
       onError: (error, variables, context) => {
-        followUpdate.current.isFollowedByMe =
-          context?.previousFollowedByMe ?? followUpdate.current.isFollowedByMe;
+        setOptimisticFollowed(context?.previousFollowedByMe ?? isFollowedByMe);
         toast.error("FollowError: Something went wrong!");
       },
       onSettled: async () => {
@@ -61,8 +61,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
         }
         await trpcUtils.invalidate();
       },
-    },
-  );
+    });
 
   const setVariant = variant === "default" ? "default" : "outline";
   return (
@@ -71,12 +70,12 @@ const FollowButton: React.FC<FollowButtonProps> = ({
       onClick={() => {
         toggleFollow({ id: author.id });
       }}
-      variant={!followUpdate.current.isFollowedByMe ? setVariant : "outline"}
+      variant={!optimisticFollowed ? setVariant : "outline"}
       className={cn("rounded-xl px-4 py-1.5 select-none", className, {
-        "opacity-80": followUpdate.current.isFollowedByMe,
+        "opacity-80": optimisticFollowed,
       })}
     >
-      {followUpdate.current.isFollowedByMe ? "Following" : "Follow"}
+      {optimisticFollowed ? "Following" : "Follow"}
     </Follow>
   );
 };

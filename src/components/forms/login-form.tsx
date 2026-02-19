@@ -60,7 +60,7 @@ export default function LoginForm() {
             setMode("login");
           }
         }
-      } catch (err) {
+      } catch {
         toast.error("Something went wrong. Please try again.");
       }
     });

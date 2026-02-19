@@ -12,30 +12,22 @@ interface UserNotificationAvtarProps {
   type: NotificationType;
 }
 
+const iconsMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
+  QUOTE: Icons.quote2,
+  REPLY: Icons.reply2,
+  REPOST: Icons.repost2,
+  LIKE: Icons.like,
+  FOLLOW: Icons.follow,
+  ADMIN: Icons.logo,
+};
+
 const UserNotificationAvtar: React.FC<UserNotificationAvtarProps> = ({
   username,
   image,
   fullname,
   type,
 }) => {
-  function enumToLower(enumValue: string): string {
-    return enumValue.toLowerCase();
-  }
-
-  const getIcon = (typeName: string) => {
-    switch (typeName) {
-      case "QUOTE":
-        return Icons.quote2;
-      case "REPLY":
-        return Icons.reply2;
-      case "REPOST":
-        return Icons.repost2;
-      default:
-        return Icons[enumToLower(typeName) as keyof typeof Icons];
-    }
-  };
-
-  const IconComponent = getIcon(type);
+  const IconComponent = iconsMap[type];
 
   return (
     <Link href={`/@${username}`}>

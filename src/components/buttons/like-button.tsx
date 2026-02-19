@@ -16,47 +16,40 @@ interface LikeButtonProps {
 const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
   const { user: loggedUser } = useSupabaseAuth();
 
-  const { count, id, likes } = likeInfo;
+  const { id, likes } = likeInfo;
   const isLikedByMe = likes?.some((like) => like.userId === loggedUser?.id);
 
-  const likeUpdate = React.useRef({
-    isLikedByMe,
-    likeCount: count.likeCount,
-  });
+  const [optimisticLiked, setOptimisticLiked] = React.useState(isLikedByMe);
 
-  const { mutate: toggleLike, isPending: isLoading } = api.like.toggleLike.useMutation({
-    onMutate: () => {
-      const previousLikedByMe = likeUpdate.current.isLikedByMe;
-      const previousLikeCount = likeUpdate.current.likeCount;
+  // Sync state with props if they change
+  React.useEffect(() => {
+    setOptimisticLiked(isLikedByMe);
+  }, [isLikedByMe]);
 
-      likeUpdate.current.isLikedByMe = !likeUpdate.current.isLikedByMe;
-      likeUpdate.current.likeCount = likeUpdate.current.isLikedByMe
-        ? likeUpdate.current.likeCount + 1
-        : likeUpdate.current.likeCount - 1;
-
-      return { previousLikedByMe, previousLikeCount };
-    },
-    onError: (error, variables, context) => {
-      likeUpdate.current.isLikedByMe =
-        context?.previousLikedByMe ?? likeUpdate.current.isLikedByMe;
-      likeUpdate.current.likeCount =
-        context?.previousLikeCount ?? likeUpdate.current.likeCount;
-
-      toast.error("Something went wrong!");
-    },
-  });
+  const { mutate: toggleLike, isPending: isLoading } =
+    api.like.toggleLike.useMutation({
+      onMutate: () => {
+        const previousLikedByMe = optimisticLiked;
+        setOptimisticLiked(!previousLikedByMe);
+        return { previousLikedByMe };
+      },
+      onError: (error, variables, context) => {
+        setOptimisticLiked(context?.previousLikedByMe ?? isLikedByMe);
+        toast.error("Something went wrong!");
+      },
+    });
 
   return (
     <div className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 active:scale-95">
       <button disabled={isLoading}>
         <Icons.heart
           onClick={() => {
-            onLike(likeUpdate.current.isLikedByMe);
+            onLike(!!optimisticLiked);
             toggleLike({ id });
           }}
-          fill={likeUpdate.current.isLikedByMe ? "#ff3040" : "transparent"}
+          fill={optimisticLiked ? "#ff3040" : "transparent"}
           className={cn("h-5 w-5", {
-            "text-[#ff3040]": likeUpdate.current.isLikedByMe,
+            "text-[#ff3040]": optimisticLiked,
           })}
         />
       </button>

@@ -14,6 +14,7 @@ import type { ParentPostInfo } from "@/types";
 import PostQuoteCard from "@/components/cards/post-quote-card";
 import PostImageCard from "@/components/cards/post-image-card";
 import { useDropzone, type Accept } from "react-dropzone";
+import Image from "next/image";
 
 interface CreatePostInputProps {
   isOpen: boolean;
@@ -23,6 +24,8 @@ interface CreatePostInputProps {
     | (Pick<ParentPostInfo, "id" | "text" | "author"> & { createdAt?: Date })
     | null;
 }
+
+const maxSize = 4 * 1024 * 1024;
 
 const CreatePostInput: React.FC<CreatePostInputProps> = ({
   isOpen,
@@ -47,8 +50,6 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
     undefined,
   );
 
-  const maxSize = 4 * 1024 * 1024;
-
   const onDrop = React.useCallback(
     (acceptedFiles: File[]) => {
       const acceptedFile = acceptedFiles[0];
@@ -63,7 +64,7 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
 
       setSelectedFile(acceptedFiles);
     },
-    [maxSize, setSelectedFile],
+    [setSelectedFile],
   );
 
   const accept: Accept = {
@@ -156,9 +157,12 @@ const CreatePostInput: React.FC<CreatePostInputProps> = ({
             />
             {previewURL && (
               <div className="border-border relative w-fit overflow-hidden rounded-[12px] border">
-                <img
+                <Image
                   src={previewURL}
-                  alt=""
+                  alt="Preview"
+                  width={1000}
+                  height={1000}
+                  unoptimized
                   className="max-h-[520px] max-w-full rounded-[12px] object-contain"
                 />
                 {/* TODO: Do this check on server side !*/}

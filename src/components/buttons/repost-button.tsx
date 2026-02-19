@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   DropdownMenu,
@@ -28,19 +30,21 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   createdAt,
   isRepostedByMe,
 }) => {
-  const repostUpdate = React.useRef({
-    isRepostedByMe,
-  });
+  const [optimisticReposted, setOptimisticReposted] =
+    React.useState(isRepostedByMe);
 
-  const { mutate: toggleRepost, isPending: isLoading } = api.post.toggleRepost.useMutation(
-    {
+  // Sync state with props if they change
+  React.useEffect(() => {
+    setOptimisticReposted(isRepostedByMe);
+  }, [isRepostedByMe]);
+
+  const { mutate: toggleRepost, isPending: isLoading } =
+    api.post.toggleRepost.useMutation({
       onMutate: () => {
-        const previousRepostByMe = repostUpdate.current.isRepostedByMe;
+        const previousRepostByMe = optimisticReposted;
+        setOptimisticReposted(!previousRepostByMe);
 
-        repostUpdate.current.isRepostedByMe =
-          !repostUpdate.current.isRepostedByMe;
-
-        if (repostUpdate.current.isRepostedByMe === true) {
+        if (!previousRepostByMe) {
           toast("Reposted");
         } else {
           toast("Removed");
@@ -49,12 +53,10 @@ const RepostButton: React.FC<RepostButtonProps> = ({
         return { previousRepostByMe };
       },
       onError: (error, variables, context) => {
-        repostUpdate.current.isRepostedByMe =
-          context?.previousRepostByMe ?? repostUpdate.current.isRepostedByMe;
+        setOptimisticReposted(context?.previousRepostByMe ?? isRepostedByMe);
         toast.error("RepostError: Something went wrong!");
       },
-    },
-  );
+    });
 
   return (
     <DropdownMenu>
@@ -63,7 +65,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
           disabled={isLoading}
           className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 outline-hidden active:scale-95"
         >
-          {repostUpdate.current.isRepostedByMe ? (
+          {optimisticReposted ? (
             <Icons.reposted className="h-5 w-5" />
           ) : (
             <Icons.repost className="h-5 w-5" />
@@ -82,16 +84,15 @@ const RepostButton: React.FC<RepostButtonProps> = ({
           className={cn(
             "active:bg-primary-foreground w-full cursor-pointer justify-between rounded-none px-4 py-3 text-[15px] font-semibold tracking-normal select-none focus:bg-transparent",
             {
-              "text-red-600 focus:text-red-600":
-                repostUpdate.current.isRepostedByMe,
+              "text-red-600 focus:text-red-600": optimisticReposted,
             },
           )}
         >
-          {repostUpdate.current.isRepostedByMe ? <>Remove</> : <>Repost</>}
+          {optimisticReposted ? <>Remove</> : <>Repost</>}
 
           <Icons.repost
             className={cn("h-5 w-5", {
-              "text-red-600": repostUpdate.current.isRepostedByMe,
+              "text-red-600": optimisticReposted,
             })}
           />
         </DropdownMenuItem>
