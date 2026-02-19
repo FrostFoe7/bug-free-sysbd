@@ -80,3 +80,12 @@ export function truncateText(text: string, maxLength: number) {
     return text;
   }
 }
+
+/**
+ * Detects if text contains Bengali characters
+ * Uses Unicode range for Bengali script: U+0980 to U+09FF
+ */
+export function hasBengaliText(text: string): boolean {
+  const bengaliRegex = /[\u0980-\u09FF]/;
+  return bengaliRegex.test(text);
+}

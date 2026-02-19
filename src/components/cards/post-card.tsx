@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { cn, formatTimeAgo } from "@/lib/utils";
+import { cn, formatTimeAgo, hasBengaliText } from "@/lib/utils";
 import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import type { PostCardProps } from "@/types";
 import UserRepliesImages from "@/components/user/user-replies-images";
@@ -112,7 +112,10 @@ const PostCard: React.FC<PostCardProps> = ({
                   dangerouslySetInnerHTML={{
                     __html: text.slice(1, -1).replace(/\\n/g, "\n"),
                   }}
-                  className="text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full"
+                  className={cn(
+                    "text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full",
+                    hasBengaliText(text) && "font-bengali"
+                  )}
                 />
               </Link>
 

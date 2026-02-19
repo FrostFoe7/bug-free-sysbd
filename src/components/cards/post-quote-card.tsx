@@ -8,7 +8,7 @@ import { api } from "@/trpc/react";
 import { Icons } from "@/components/icons";
 import type { ParentPostInfo } from "@/types";
 import Link from "next/link";
-import { formatTimeAgo } from "@/lib/utils";
+import { formatTimeAgo, hasBengaliText } from "@/lib/utils";
 
 type PostQuoteCardProps = Partial<
   Pick<ParentPostInfo, "id" | "text" | "author">
@@ -83,6 +83,7 @@ const RenderCard: React.FC<PostQuoteCardProps> = ({
             dangerouslySetInnerHTML={{
               __html: text.slice(1, -1).replace(/\\n/g, "\n"),
             }}
+            className={hasBengaliText(text) ? "font-bengali" : ""}
           />
         </span>
       )}

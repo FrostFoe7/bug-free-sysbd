@@ -13,7 +13,7 @@ import RepostButton from "@/components/buttons/repost-button";
 import ShareButton from "@/components/buttons/share-button";
 import LikeButton from "@/components/buttons/like-button";
 import PostActivityCard from "@/components/cards/post-activity-card";
-import { cn, formatTimeAgo } from "@/lib/utils";
+import { cn, formatTimeAgo, hasBengaliText } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
@@ -148,7 +148,10 @@ const PostReplyCard: React.FC<PostReplyCardProps> = ({
                 dangerouslySetInnerHTML={{
                   __html: text.slice(1, -1).replace(/\\n/g, "\n"),
                 }}
-                className="text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full"
+                className={cn(
+                  "text-accent-foreground mt-1 text-[15px] leading-5 whitespace-pre-line max-md:max-w-full",
+                  hasBengaliText(text) && "font-bengali"
+                )}
               />
 
               {images && images.length > 0 && (
