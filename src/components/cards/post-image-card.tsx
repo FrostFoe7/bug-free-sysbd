@@ -16,7 +16,7 @@ interface PostImageCardProps {
 }
 
 const PostImageCard: React.FC<PostImageCardProps> = ({ images }) => {
-  const { setImageUrl } = useImageStore();
+  const { setImages } = useImageStore();
 
   if (!images || images.length === 0) return null;
 
@@ -28,7 +28,7 @@ const PostImageCard: React.FC<PostImageCardProps> = ({ images }) => {
             <div
               className="border-border relative cursor-pointer overflow-hidden rounded-[12px] border"
               onClick={() => {
-                setImageUrl(image);
+                setImages(images, index);
               }}
             >
               <Image

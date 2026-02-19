@@ -1,11 +1,15 @@
 import { create } from "zustand";
 
 type ImageStore = {
-  imageUrl: string | undefined;
-  setImageUrl: (url: string | undefined) => void;
+  images: string[];
+  currentIndex: number;
+  setImages: (urls: string[], index?: number) => void;
+  setImageIndex: (index: number) => void;
 };
 
 export const useImageStore = create<ImageStore>((set) => ({
-  imageUrl: "",
-  setImageUrl: (url) => set({ imageUrl: url }),
+  images: [],
+  currentIndex: 0,
+  setImages: (urls, index = 0) => set({ images: urls, currentIndex: index }),
+  setImageIndex: (index) => set({ currentIndex: index }),
 }));
