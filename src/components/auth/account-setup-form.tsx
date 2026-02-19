@@ -220,10 +220,11 @@ export default function AccountSetupForm({ username }: { username: string }) {
                             <FormLabel>Username</FormLabel>
                             <FormControl>
                               <div className="my-1 flex h-7 items-center gap-2">
-                                <Plus className="h-4 w-4 text-[#4D4D4D]" />
+                                <Lock className="h-4 w-4 text-[#4D4D4D]" />
                                 <Input
                                   {...field}
-                                  className="text-accent-foreground min-h-min border-0 bg-transparent p-0 text-[15px] ring-0 outline-hidden placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0"
+                                  readOnly
+                                  className="text-accent-foreground min-h-min border-0 bg-transparent p-0 text-[15px] ring-0 outline-hidden select-none placeholder:text-[#777777] focus-visible:ring-0 focus-visible:ring-offset-0 opacity-70 cursor-not-allowed"
                                   placeholder="username"
                                 />
                               </div>
