@@ -66,6 +66,7 @@ export async function proxy(request: NextRequest) {
     "/sso-callback",
     "/api",
     "/opengraph-image.png",
+    "/@",
   ];
   const isPublicRoute = publicRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route),

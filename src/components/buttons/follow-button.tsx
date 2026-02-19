@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import type { AuthorInfoProps } from "@/types";
 import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface FollowButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant: string;
@@ -21,6 +22,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({
 }) => {
   const path = usePathname();
   const { user: loggedUser } = useSupabaseAuth();
+  const router = useRouter();
 
   const isSameUser = author.id === loggedUser?.id;
   const isFollowedByMe = author.followers?.some(
@@ -68,6 +70,10 @@ const FollowButton: React.FC<FollowButtonProps> = ({
     <Follow
       disabled={isLoading || isSameUser}
       onClick={() => {
+        if (!loggedUser) {
+          router.push("/login");
+          return;
+        }
         toggleFollow({ id: author.id });
       }}
       variant={!optimisticFollowed ? setVariant : "outline"}

@@ -14,6 +14,8 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import type { AuthorInfoProps } from "@/types";
 import QuoteButton from "@/components/buttons/quote-button";
+import { useSupabaseAuth } from "@/components/providers/supabase-provider";
+import { useRouter } from "next/navigation";
 
 interface RepostButtonProps {
   id: string;
@@ -30,6 +32,9 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   createdAt,
   isRepostedByMe,
 }) => {
+  const { user: loggedUser } = useSupabaseAuth();
+  const router = useRouter();
+
   const [optimisticReposted, setOptimisticReposted] =
     React.useState(isRepostedByMe);
 
@@ -60,7 +65,15 @@ const RepostButton: React.FC<RepostButtonProps> = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        onClick={(e) => {
+          if (!loggedUser) {
+            e.preventDefault();
+            router.push("/login");
+          }
+        }}
+      >
         <button
           disabled={isLoading}
           className="hover:bg-primary flex h-fit w-fit items-center justify-center rounded-full p-2 outline-hidden active:scale-95"

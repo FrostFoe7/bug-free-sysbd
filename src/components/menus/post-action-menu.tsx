@@ -9,6 +9,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import AreYouSure from "@/components/cards/confirmation-card";
+import { useRouter } from "next/navigation";
 
 interface PostActionMenuProps {
   threadId: string;
@@ -20,11 +21,20 @@ const PostActionMenu: React.FC<PostActionMenuProps> = ({
   threadId,
 }) => {
   const { user } = useSupabaseAuth();
+  const router = useRouter();
   const isLoggedUser = authorId === user?.id;
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger
+          asChild
+          onClick={(e) => {
+            if (!user) {
+              e.preventDefault();
+              router.push("/login");
+            }
+          }}
+        >
           <div className='hover:before:bg-primary relative flex cursor-pointer items-center justify-center hover:before:absolute hover:before:-inset-2 hover:before:z-[-1] hover:before:rounded-full hover:before:content-[""]'>
             <MoreHorizontal className="aspect-square h-4 w-4 flex-1 overflow-hidden object-cover object-center" />
           </div>

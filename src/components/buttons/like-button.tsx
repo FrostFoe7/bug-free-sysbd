@@ -7,6 +7,7 @@ import { useSupabaseAuth } from "@/components/providers/supabase-provider";
 import type { PostCardProps } from "@/types";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface LikeButtonProps {
   likeInfo: Pick<PostCardProps, "id" | "likes" | "count">;
@@ -15,6 +16,7 @@ interface LikeButtonProps {
 
 const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
   const { user: loggedUser } = useSupabaseAuth();
+  const router = useRouter();
 
   const { id, likes } = likeInfo;
   const isLikedByMe = likes?.some((like) => like.userId === loggedUser?.id);
@@ -44,6 +46,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ likeInfo, onLike }) => {
       <button disabled={isLoading}>
         <Icons.heart
           onClick={() => {
+            if (!loggedUser) {
+              router.push("/login");
+              return;
+            }
             onLike(!!optimisticLiked);
             toggleLike({ id });
           }}
